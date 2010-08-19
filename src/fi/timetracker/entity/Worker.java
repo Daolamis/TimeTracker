@@ -10,5 +10,6 @@ import java.util.List;
 public class Worker extends Person{
 	
 	private List<Project> projects;
+	private List<WorkHour> workhours;
 
 }
