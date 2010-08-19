@@ -8,9 +8,7 @@ import java.util.Date;
  *
  */
 public abstract class Person extends Entity {
-	
-	//private Person(){} //no default constructor for public
-	
+		
 	public enum PersonStatus {ACTIVE('A'), CLOSED('C');
 		private char code;
 		
