@@ -51,7 +51,7 @@ public abstract class Person extends Entity {
 	private Date lastlogin;	
 	private Person creator;
 	
-	public Person createInstance(char rolecode){
+	public static Person createInstance(char rolecode){
 		 switch (rolecode) {
 	      case 'W': 
 	           return new Worker();
