@@ -1,1 +1,12 @@
-Project time tracking webapplication
+Tietokantasovellus harjoitustyö kesä 2010 "Projektin työaikaseuranta".
+Sovelluksessa on kolme käyttäjäryhmää: pääkäyttäjä, manager ja työntekijä.
+
+Pääkäyttäjä hallinnoi sovellusta luomalla kaikki sen käyttäjät, projektit ja
+tuntityypit. Pääkäyttäjä liittää managerit projekteihin (voi myös liittää
+työntekijöitä), jolloin managerit voivat liittää työntekijöitä hallinnoimiinsa
+projekteihin. 
+
+Managerit ja työntekijät kirjaavat tekemänsä työtunnit projekteihin. Pääkäyttäjä
+voi myöhemmin tarkastella yhteenvetoraportteja järjestelmään syötetyistä
+tunneista. Pääkäyttäjä voi myös muokata kenen tahansa käyttäjän tunteja, manager
+voi muokata vain halinnoimansa projektin työntekijöiden tunteja.
