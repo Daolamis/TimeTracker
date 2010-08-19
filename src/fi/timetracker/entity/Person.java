@@ -8,8 +8,31 @@ import java.util.Date;
  *
  */
 public abstract class Person extends Entity {
-	private enum PersonStatus {ACTIVE, CLOSED};	
-	private enum Role {WORKER, MANAGER, ADMIN};
+	
+	//private Person(){} //no default constructor for public
+	
+	public enum PersonStatus {ACTIVE('A'), CLOSED('C');
+		private char code;
+		
+		private PersonStatus(char code){
+			this.code = code;
+		}
+		
+		public String getCode(){
+			return ""+this.code;
+		}	
+	};
+	
+	public enum Role {WORKER('W'), MANAGER('M'), SUPERUSER('S');
+		private char code;
+		
+		private Role(char code){
+			this.code = code;
+		}
+		public String getCode(){
+			return ""+this.code;
+		}	
+	};
 	
 	private Role role;
 	private PersonStatus status;
@@ -28,12 +51,27 @@ public abstract class Person extends Entity {
 	private Date lastlogin;	
 	private Person creator;
 	
+	public Person createInstance(char rolecode){
+		 switch (rolecode) {
+	      case 'W': 
+	           return new Worker();
+	      case 'M': 
+	    	  return new Manager();
+	      case 'S': 
+	    	  return new SuperUser();
+	      default:
+	    	  throw new AssertionError("Unknown rolecode: " + rolecode);	        
+	    }
+	}
+	
 	public Role getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
+	
+	protected void setRole(Role role) {
 		this.role = role;
 	}
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -111,5 +149,26 @@ public abstract class Person extends Entity {
 	}
 	public void setCreator(Person creator) {
 		this.creator = creator;
+	}
+
+	public PersonStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(PersonStatus status) {
+		this.status = status;
+	}
+	
+	public void setStatusFromCode(char code) {
+		 switch (code) {
+	      case 'A': 
+	        this.status = PersonStatus.ACTIVE;
+	        break;   
+	      case 'C': 
+	    	  this.status = PersonStatus.CLOSED;
+		        break;
+	      default:
+	    	  throw new AssertionError("Unknown code: " + code);	        
+	    }
 	}
 }
