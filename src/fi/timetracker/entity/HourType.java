@@ -8,12 +8,18 @@ public class HourType extends Entity{
 	
 	private String name;
 	private String description;
-	
+	//toimiala
+	private String branchOfActivity;
 	//Projektit, joissa ko. tuntityyppiä käytetään
 	private List<Project> projects;
 	
-	//toimiala
-	private String branchOfActivity;
+	public HourType(){
+		super(null);
+	}
+	
+	public HourType(Integer id){
+		super(id);
+	}
 
 	public String getName() {
 		return name;

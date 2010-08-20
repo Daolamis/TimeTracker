@@ -30,6 +30,14 @@ public class Project extends Entity {
 
 	private List<Worker> workers;
 	private List<HourType> hourtypes;
+	
+	public Project(){
+		super(null);
+	}
+	
+	public Project(Integer id){
+		super(id);
+	}
 
 	public String getName() {
 		return name;

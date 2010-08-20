@@ -8,6 +8,10 @@ import java.util.Date;
  *
  */
 public abstract class Person extends Entity {
+	
+	protected Person(Integer id){
+		super(id);
+	}
 		
 	public enum PersonStatus {ACTIVE('A'), CLOSED('C');
 		private char code;
@@ -49,14 +53,14 @@ public abstract class Person extends Entity {
 	private Date lastlogin;	
 	private Person creator;
 	
-	public static Person createInstance(char rolecode){
+	public static Person createInstance(char rolecode, Integer id){
 		 switch (rolecode) {
 	      case 'W': 
-	           return new Worker();
+	           return new Worker(id);
 	      case 'M': 
-	    	  return new Manager();
+	    	  return new Manager(id);
 	      case 'S': 
-	    	  return new SuperUser();
+	    	  return new SuperUser(id);
 	      default:
 	    	  throw new AssertionError("Unknown rolecode: " + rolecode);	        
 	    }

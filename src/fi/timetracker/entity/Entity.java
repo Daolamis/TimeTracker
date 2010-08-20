@@ -8,6 +8,12 @@ import java.util.Date;
  *
  */
 public abstract class Entity {
+	private Integer id;
+	private Date updated;
+	
+	protected Entity(Integer id){
+		this.id = id;
+	}
 	
 	public Date getUpdated() {
 		return updated;
@@ -18,6 +24,5 @@ public abstract class Entity {
 	public int getId() {
 		return id;
 	}
-	private int id;
-	private Date updated;
+	
 }

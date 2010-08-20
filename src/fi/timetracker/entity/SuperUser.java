@@ -7,7 +7,8 @@ package fi.timetracker.entity;
  */
 public class SuperUser extends Person {
 	
-	protected SuperUser(){
+	protected SuperUser(Integer id){
+		super(id);
 		super.setRole(Role.SUPERUSER);
 	}
 }

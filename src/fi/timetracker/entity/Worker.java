@@ -8,7 +8,8 @@ import java.util.List;
  */
 public class Worker extends Person{
 	
-	protected Worker(){
+	protected Worker(Integer id){
+		super(id);
 		super.setRole(Role.WORKER);
 	}
 	

@@ -4,7 +4,8 @@ package fi.timetracker.entity;
  */
 public class Manager extends Worker{
 	
-	protected Manager(){
+	protected Manager(Integer id){
+		super(id);
 		super.setRole(Role.MANAGER);
 	}
 }

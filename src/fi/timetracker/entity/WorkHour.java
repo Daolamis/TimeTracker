@@ -15,6 +15,14 @@ public class WorkHour extends Entity{
 	private Date workDate;
 	private double amount;
 	
+	public WorkHour(){
+		super(null);
+	}
+	
+	public WorkHour(Integer id){
+		super(id);
+	}
+	
 	public Project getProject() {
 		return project;
 	}
