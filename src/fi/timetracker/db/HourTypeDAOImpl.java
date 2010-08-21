@@ -1,13 +1,25 @@
 package fi.timetracker.db;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import fi.timetracker.entity.Entity;
 import fi.timetracker.entity.HourType;
-/** 
+
+/**
  * @author Petteri Parviainen
  */
 public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
+
+	private JdbcTemplate jdbcTemplate;
+
+	public void setDataSource(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
 	@Override
 	public Entity getById(int id) {
@@ -32,4 +44,10 @@ public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
 		return false;
 	}
 
+	@Override
+	public HourType joinHourTypesToProject(int projectId,
+			Set<Integer> hourTypeIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

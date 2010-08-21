@@ -1,6 +1,7 @@
 package fi.timetracker.db;
 
 import org.springframework.dao.OptimisticLockingFailureException;
+
 import fi.timetracker.entity.Entity;
 
 /** 
@@ -15,5 +16,14 @@ public abstract class AbstractDAO {
 		if(inDb.getUpdated().equals(entity.getUpdated()) == false){
 			throw new OptimisticLockingFailureException("Entity: "+entity.getClass()+" id: "+entity.getId()+" was changed");
 		}		
-	}	
+	}
+	
+	protected static String generateInCriteria(int numberOfParams){
+		StringBuffer inCriteria=new StringBuffer();
+		inCriteria.append("  AND person_project.projects_id IN (?");
+		for(int i = 1; i < numberOfParams; i++){
+			inCriteria.append(",?");
+		}
+		return inCriteria.append(")").toString();
+	}
 }

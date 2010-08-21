@@ -21,7 +21,7 @@ public abstract class Entity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	

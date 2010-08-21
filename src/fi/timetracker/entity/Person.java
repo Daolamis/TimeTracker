@@ -50,7 +50,8 @@ public abstract class Person extends Entity {
 	private String phone;
 	private Date dateOfBirth;
 	private String socialSecuritySuffix;
-	private Date lastlogin;	
+	private Date lastlogin;
+	private Date created;
 	private Person creator;
 	
 	public static Person createInstance(char rolecode, Integer id){
@@ -172,5 +173,13 @@ public abstract class Person extends Entity {
 	      default:
 	    	  throw new AssertionError("Unknown code: " + code);	        
 	    }
+	}
+	
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 }

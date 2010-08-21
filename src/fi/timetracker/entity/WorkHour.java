@@ -7,9 +7,9 @@ import java.util.Date;
  */
 public class WorkHour extends Entity{
 	
-	private Project project;
-	private Worker worker;
-	private HourType hourType;
+	private Integer projectId;
+	private Integer workerId;
+	private Integer hourTypeId;
 	
 	private boolean overtime;
 	private Date workDate;
@@ -21,26 +21,8 @@ public class WorkHour extends Entity{
 	
 	public WorkHour(Integer id){
 		super(id);
-	}
+	}		
 	
-	public Project getProject() {
-		return project;
-	}
-	public void setProject(Project project) {
-		this.project = project;
-	}
-	public Worker getWorker() {
-		return worker;
-	}
-	public void setWorker(Worker worker) {
-		this.worker = worker;
-	}
-	public HourType getHourType() {
-		return hourType;
-	}
-	public void setHourType(HourType hourType) {
-		this.hourType = hourType;
-	}
 	public boolean isOvertime() {
 		return overtime;
 	}
@@ -58,5 +40,29 @@ public class WorkHour extends Entity{
 	}
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+
+	public Integer getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+
+	public Integer getWorkerId() {
+		return workerId;
+	}
+
+	public void setWorkerId(Integer workerId) {
+		this.workerId = workerId;
+	}
+
+	public Integer getHourTypeId() {
+		return hourTypeId;
+	}
+
+	public void setHourTypeId(Integer hourTypeId) {
+		this.hourTypeId = hourTypeId;
 	}
 }

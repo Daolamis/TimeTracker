@@ -3,7 +3,6 @@ package fi.timetracker.db;
 import java.util.List;
 
 import fi.timetracker.entity.Project;
-import fi.timetracker.entity.Worker;
 
 /**
  * 
@@ -13,11 +12,13 @@ import fi.timetracker.entity.Worker;
 public interface ProjectDAO {
 	
 	public Project saveProject(Project project);
-	
-	public List<Project> findProjects();
+		
+	public List<Integer> findProjectsByWorker(Integer workerId);
 	
 	public Project getProject(int id);
 	
-	public void joinWorkerToProjects(Worker worker, List<Project> projects, List<Project> focusProjects);
+	public List<Project> getAllProjects();
+	
+	public void joinWorkerToProjects(Integer workerId, List<Integer> projectsToJoin, List<Integer> focusProjects);
  
 }

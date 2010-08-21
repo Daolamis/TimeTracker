@@ -29,7 +29,7 @@ public class Project extends Entity {
 	private Date created;
 
 	private List<Worker> workers;
-	private List<HourType> hourtypes;
+	private List<Integer> hourtypes;
 	
 	public Project(){
 		super(null);
@@ -92,11 +92,11 @@ public class Project extends Entity {
 		this.workers = workers;
 	}
 
-	public List<HourType> getHourtypes() {
+	public List<Integer> getHourtypes() {
 		return hourtypes;
 	}
 
-	public void setHourtypes(List<HourType> hourtypes) {
+	public void setHourtypes(List<Integer> hourtypes) {
 		this.hourtypes = hourtypes;
 	}
 }

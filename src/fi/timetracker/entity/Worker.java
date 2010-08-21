@@ -11,24 +11,13 @@ public class Worker extends Person{
 	protected Worker(Integer id){
 		super(id);
 		super.setRole(Role.WORKER);
-	}
+	}	
+	private List<Integer> projects; //projektin pääavain, joka liitetty työntekijään
 	
-	private List<Project> projects;
-	private List<WorkHour> workhours;
-	
-	public List<Project> getProjects() {
+	public List<Integer> getProjects() {
 		return projects;
 	}
-	public void setProjects(List<Project> projects) {
+	public void setProjects(List<Integer> projects) {
 		this.projects = projects;
 	}
-	public List<WorkHour> getWorkhours() {
-		return workhours;
-	}
-	public void setWorkhours(List<WorkHour> workhours) {
-		this.workhours = workhours;
-	}
-	
-	
-
 }
