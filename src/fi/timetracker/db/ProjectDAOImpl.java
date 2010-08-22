@@ -2,9 +2,9 @@ package fi.timetracker.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -23,7 +23,7 @@ import fi.timetracker.entity.Project;
 public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 
 	private static final String UPDATE = "UPDATE project SET name = ?, "
-			+ "description = ?, status = ?, updated = ? WHERE id = ?  ";
+			+ "description = ?, status = ?, updated = CURRENT_TIMESTAMP WHERE id = ?  ";
 
 	private static final String GET_ALL = "SELECT * FROM project";
 	private static final String GET_PROJECT = "SELECT * FROM project WHERE id = ?";
@@ -50,7 +50,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 	}
 
 	@Override
-	public Project saveProject(Project project) {
+	public Integer saveProject(Project project) {
 		int id = -1;
 		if (project.getId() == null) {
 			id = this.insertProject(project);
@@ -58,7 +58,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 			this.optimisticLockingCheck(project); // OptimisticLocking
 			id = this.updateProject(project);
 		}
-		return this.getProject(id);
+		return id;
 	}
 
 	private int updateProject(Project project) {
@@ -66,7 +66,6 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 		args.add(project.getName());
 		args.add(project.getDescription());
 		args.add(project.getStatus());
-		args.add(new Date());
 		args.add(project.getId());
 		
 		this.jdbcTemplate.update(UPDATE, args.toArray());
@@ -103,7 +102,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 
 	@Override
 	public void joinWorkerToProjects(Integer workerId,
-			List<Integer> projectsToJoin, List<Integer> focusProjects) {
+			Set<Integer> projectsToJoin, Set<Integer> focusProjects) {
 		
 		LinkedList<Object> args = new LinkedList<Object>();
 		args.add(workerId);
@@ -133,7 +132,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 			project.setDescription(rs.getString("description"));
 			project.setStatusFromCode(rs.getString("status").charAt(0));
 			project.setCreated(rs.getDate("created"));
-			project.setUpdated(rs.getDate("updated"));
+			project.setUpdated(rs.getTimestamp("updated"));
 			return project;
 		}
 	};

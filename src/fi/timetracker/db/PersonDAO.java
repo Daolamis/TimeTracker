@@ -12,7 +12,7 @@ import fi.timetracker.entity.Person;
  */
 public interface PersonDAO {
 	
-	public Person savePerson(Person person);
+	public Integer savePerson(Person person);
 	
 	public List<Person> findPersons(String firstname, String lastname, String email, Set<Integer> projects);
 	

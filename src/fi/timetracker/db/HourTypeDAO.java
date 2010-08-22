@@ -14,7 +14,9 @@ public interface HourTypeDAO {
 	
 	public HourType getHourType(int id);
 	
-	public boolean saveHourType(HourType type);
+	public Integer saveHourType(HourType type);
 	
-	public HourType joinHourTypesToProject(int projectId, Set<Integer> hourTypeIds);
+	public List<Integer> getProjectHourTypes(Integer projectId);
+	
+	public void joinHourTypesToProject(int projectId, Set<Integer> hourTypeIds);
 }

@@ -14,5 +14,4 @@ public interface PasswordDAO {
 	public boolean changePassword(Person person, String oldPassword, String newPassword);
 	
 	public String generatePassword(Person person);
-
 }

@@ -2,7 +2,6 @@ package fi.timetracker.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -31,8 +30,8 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 	private static final String UPDATE = "UPDATE Person SET status = ?, "
 			+ "firstname = ?, lastname = ?, title = ?, birthday = ?, "
 			+ "social_security_suffix = ?, address = ?, postal_code = ?, city = ?,"
-			+ " country = ?, role = ?, email = ?, phone = ?, updated = ? WHERE id = ?";
-	private static final String QUERY = "SELECT * FROM Person WHERE id = ?";
+			+ " country = ?, role = ?, email = ?, phone = ?, updated = CURRENT_TIMESTAMP WHERE id = ?";
+	private static final String GET_PERSON = "SELECT * FROM Person WHERE id = ?";
 	private static final String FIND = "SELECT DISTINCT person.* FROM person LEFT JOIN person_projects ON person.id = person_projects.person_id WHERE firstname " +
 			"LIKE ? AND lastname LIKE ? AND email LIKE ?";
 	
@@ -65,11 +64,11 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 
 	@Override
 	public Person getPerson(int id) {
-		return this.jdbcTemplate.queryForObject(QUERY, new Object[]{id}, new PersonRowMapper());		
+		return this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{id}, new PersonRowMapper());		
 	}
 
 	@Override
-	public Person savePerson(Person person) {
+	public Integer savePerson(Person person) {
 		int id = -1;
 		if (person.getId() == null) {
 			 id = this.insertPerson(person);
@@ -77,7 +76,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 			this.optimisticLockingCheck(person); //OptimisticLocking
 			id = this.updatePerson(person);
 		}
-		return this.getPerson(id);
+		return id;
 	}
 
 	private int updatePerson(Person person) {
@@ -95,7 +94,6 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 		args.add(person.getRole().getCode());
 		args.add(person.getEmail());
 		args.add(person.getPhone());
-		args.add(new Date());
 		args.add(person.getId());
 		
 		this.jdbcTemplate.update(UPDATE, args.toArray());
@@ -126,7 +124,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 		return id.intValue();
 	}
 	
-	private static class PersonRowMapper implements RowMapper<Person> {
+	protected static class PersonRowMapper implements RowMapper<Person> {
 
 		public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Person person = Person.createInstance(rs.getString("role")
@@ -145,9 +143,9 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 			person.setPostalcode(rs.getString("postalcode"));
 			person.setCity(rs.getString("city"));
 			person.setCountry(rs.getString("country"));
-			person.setLastlogin(rs.getDate("last_login"));
-			person.setCreated(rs.getDate("created"));
-			person.setUpdated(rs.getDate("updated"));
+			person.setLastlogin(rs.getTimestamp("last_login"));
+			person.setCreated(rs.getTimestamp("created"));
+			person.setUpdated(rs.getTimestamp("updated"));
 			return person;
 		}
 	};
