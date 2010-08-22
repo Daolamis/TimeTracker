@@ -2,6 +2,7 @@ package fi.timetracker.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -29,7 +30,7 @@ public class Project extends Entity {
 	private Date created;
 
 	private List<Worker> workers;
-	private List<Integer> hourtypes;
+	private Set<Integer> hourtypes;
 	
 	public Project(){
 		super(null);
@@ -92,11 +93,11 @@ public class Project extends Entity {
 		this.workers = workers;
 	}
 
-	public List<Integer> getHourtypes() {
+	public Set<Integer> getHourtypes() {
 		return hourtypes;
 	}
 
-	public void setHourtypes(List<Integer> hourtypes) {
+	public void setHourtypes(Set<Integer> hourtypes) {
 		this.hourtypes = hourtypes;
 	}
 }

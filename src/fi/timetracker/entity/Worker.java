@@ -1,6 +1,6 @@
 package fi.timetracker.entity;
 
-import java.util.List;
+import java.util.Set;
 /**
  * 
  * @author Petteri Parviainen
@@ -12,12 +12,12 @@ public class Worker extends Person{
 		super(id);
 		super.setRole(Role.WORKER);
 	}	
-	private List<Integer> projects; //projektin pääavain, joka liitetty työntekijään
+	private Set<Integer> projects; //projektin pääavaimia (työntekijä kuuluu ko. projekteihin)
 	
-	public List<Integer> getProjects() {
+	public Set<Integer> getProjects() {
 		return projects;
 	}
-	public void setProjects(List<Integer> projects) {
+	public void setProjects(Set<Integer> projects) {
 		this.projects = projects;
 	}
 }
