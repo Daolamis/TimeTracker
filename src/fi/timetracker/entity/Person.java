@@ -31,8 +31,8 @@ public abstract class Person extends Entity {
 		private Role(char code){
 			this.code = code;
 		}
-		public String getCode(){
-			return ""+this.code;
+		public char getCode(){
+			return this.code;
 		}	
 	};
 	
@@ -52,7 +52,7 @@ public abstract class Person extends Entity {
 	private String socialSecuritySuffix;
 	private Date lastlogin;
 	private Date created;
-	private Person creator;
+	//private Person creator;
 	
 	public static Person createInstance(char rolecode, Integer id){
 		 switch (rolecode) {
@@ -65,6 +65,26 @@ public abstract class Person extends Entity {
 	      default:
 	    	  throw new AssertionError("Unknown rolecode: " + rolecode);	        
 	    }
+	}
+	
+	public static Person createInstance(PersonCommand command){
+		Person instance = createInstance(command.getRole().getCode(), null); 
+		if(instance.getRole() != Role.SUPERUSER){
+			((Worker) instance).setProjects(command.getProjects());
+		}	    
+		instance.setFirstname(command.getFirstname());
+		instance.setLastname(command.getLastname());
+		instance.setTitle(command.getTitle());
+		instance.setAddress(command.getAddress());
+		instance.setPostalcode(command.getPostalcode());
+		instance.setCity(command.getCity());
+		instance.setCountry(command.getCountry());
+		instance.setEmail(command.getEmail());
+		instance.setPhone(command.getPhone());
+		instance.setDateOfBirth(command.getDateOfBirth());
+		instance.setSocialSecuritySuffix(command.getSocialSecuritySuffix());		
+		return instance;
+		
 	}
 	
 	public Role getRole() {
@@ -146,12 +166,6 @@ public abstract class Person extends Entity {
 	}
 	public void setLastlogin(Date lastlogin) {
 		this.lastlogin = lastlogin;
-	}
-	public Person getCreator() {
-		return creator;
-	}
-	public void setCreator(Person creator) {
-		this.creator = creator;
 	}
 
 	public PersonStatus getStatus() {

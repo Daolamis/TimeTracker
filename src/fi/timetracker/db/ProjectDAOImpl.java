@@ -44,7 +44,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 
 	@Override
 	public Project getProject(int id) {
-		return this.jdbcTemplate.queryForObject(GET_PROJECT,
+		return (Project) this.jdbcTemplate.queryForObject(GET_PROJECT,
 				new Object[] { id }, new ProjectRowMapper());
 
 	}
@@ -125,7 +125,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 	}
 
 
-	private static class ProjectRowMapper implements RowMapper<Project> {
+	private static class ProjectRowMapper implements RowMapper{
 		public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Project project = new Project(rs.getInt("id"));
 			project.setName(rs.getString("name"));

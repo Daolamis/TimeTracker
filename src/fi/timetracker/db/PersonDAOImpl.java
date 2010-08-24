@@ -24,12 +24,12 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 /*
 	private static final String INSERT = "INSERT INTO Person (status, firstname,"
 			+ " lastname, title, birthday, social_security_suffix, address, "
-			+ "postal_code, city, country, role, email, phone, creator) "
+			+ "postalcode, city, country, role, email, phone, creator) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 */
 	private static final String UPDATE = "UPDATE Person SET status = ?, "
 			+ "firstname = ?, lastname = ?, title = ?, birthday = ?, "
-			+ "social_security_suffix = ?, address = ?, postal_code = ?, city = ?,"
+			+ "social_security_suffix = ?, address = ?, postalcode = ?, city = ?,"
 			+ " country = ?, role = ?, email = ?, phone = ?, updated = CURRENT_TIMESTAMP WHERE id = ?";
 	private static final String GET_PERSON = "SELECT * FROM Person WHERE id = ?";
 	private static final String FIND = "SELECT DISTINCT person.* FROM person LEFT JOIN person_projects ON person.id = person_projects.person_id WHERE firstname " +
@@ -64,7 +64,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 
 	@Override
 	public Person getPerson(int id) {
-		return this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{id}, new PersonRowMapper());		
+		return (Person) this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{id}, new PersonRowMapper());		
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 		parameters.addValue("birthday", "" + person.getDateOfBirth());
 		parameters.addValue("social_security_suffix", person.getSocialSecuritySuffix());
 		parameters.addValue("address", person.getAddress());
-		parameters.addValue("postal_code", person.getPostalcode());
+		parameters.addValue("postalcode", person.getPostalcode());
 		parameters.addValue("city", person.getCity());
 		parameters.addValue("country", person.getCountry());
 		parameters.addValue("role", person.getRole().getCode());
@@ -124,7 +124,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 		return id.intValue();
 	}
 	
-	protected static class PersonRowMapper implements RowMapper<Person> {
+	protected static class PersonRowMapper implements RowMapper {
 
 		public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Person person = Person.createInstance(rs.getString("role")

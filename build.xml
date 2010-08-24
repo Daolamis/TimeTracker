@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Timr tracker" default="compile" basedir=".">
+	<!-- Properties -->
+	<property name="project.home" value="."/>
+	<property name="src.dir" value="${project.home}/src"/>
+	<property name="build.dir" value="${project.home}/build"/>
+	<property name="lib.dir" value="${project.home}/lib"/>
+	
+  <!-- Configure properties to access the Manager application -->
+  <property name="url"      value="http://localhost:8080/manager"/>
+  <property name="username" value="tomcat"/>
+  <property name="password" value="tomcat"/>
+
+  <!-- Configure the custom Ant tasks for the Manager application -->
+  <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"/>
+  <taskdef name="list"      classname="org.apache.catalina.ant.ListTask"/>
+  <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"/>
+  <taskdef name="resources" classname="org.apache.catalina.ant.ResourcesTask"/>
+  <taskdef name="roles"     classname="org.apache.catalina.ant.RolesTask"/>
+  <taskdef name="start"     classname="org.apache.catalina.ant.StartTask"/>
+  <taskdef name="stop"      classname="org.apache.catalina.ant.StopTask"/>
+  <taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask"/>
+
+
+	<!-- Classpath -->
+	<path id="project.classpath">
+		<pathelement path="${build.dir}" />
+		<fileset dir="${lib.dir}" includes="*.jar"/>
+	</path>
+
+	<!-- Clean -->
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<mkdir dir="${build.dir}"/>
+	</target>
+
+	<!-- Compile -->  
+	<target name="compile">
+		<javac srcdir="${src.dir}"
+			destdir="${build.dir}"
+			debug="on"
+			deprecation="on"
+			optimize="on">
+			<classpath refid="project.classpath"/>
+		</javac>
+	</target>
+  
+	<target name="war" depends="compile">
+		<delete file="${build.dir}/timetracker.war" quiet="true"/>
+		<war destfile="${build.dir}/timetracker.war" webxml="conf/web.xml">
+		    <classes dir="${build.dir}">
+			    <include name="**/*.class"/>
+		    </classes>
+			<zipfileset dir="lib" prefix="WEB-INF/lib">
+				<include name="spring-beans.jar"/>
+				<include name="spring-jdbc.jar"/>
+				<include name="spring-context.jar"/>
+				<include name="spring-core.jar"/>					
+				<include name="spring-tx.jar"/>
+				<include name="spring-webmvc.jar"/>
+				<include name="spring-web.jar"/>
+				<include name="commons-logging-1.1.1.jar"/>
+				<include name="standard.jar"/>
+				<include name="jstl.jar"/>
+			</zipfileset>			
+		    <zipfileset dir="src" prefix="WEB-INF/scr"/>
+			<zipfileset dir="web/jsp" prefix="WEB-INF/jsp"/>
+			<zipfileset file="web/jsp/spring-form.tld" prefix="WEB-INF/tld"/>
+			<zipfileset file="conf/timetracker-servlet.xml" prefix="WEB-INF"/>
+			<zipfileset dir="web/css" prefix="css"/>
+		</war>
+	</target>
+	
+	<target name="redeploy" description="Install web application" depends="undeploy,deploy"/>
+	
+	<target name="deploy" description="Install web application" depends="war">
+	    <deploy url="${url}" username="${username}" password="${password}"
+	            path="/timetracker" war="file:build/timetracker.war"/>
+	</target>
+	
+	<target name="undeploy" description="Remove web application">
+	    <undeploy url="${url}" username="${username}" password="${password}"
+	            path="/timetracker"/>
+	  </target>
+
+</project>

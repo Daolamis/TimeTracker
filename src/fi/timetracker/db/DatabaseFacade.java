@@ -6,7 +6,6 @@ import java.util.Set;
 import fi.timetracker.entity.HourType;
 import fi.timetracker.entity.Person;
 import fi.timetracker.entity.Project;
-import fi.timetracker.entity.SuperUser;
 
 /** 
  * @author Petteri Parviainen
@@ -15,7 +14,7 @@ public interface DatabaseFacade {
 	
 	public Person login(String userid, String password);
 	
-	public Person savePerson(SuperUser superuser,  Person person);
+	public Person savePerson(Person person);
 	
 	public Person getPerson(Integer id);
 	

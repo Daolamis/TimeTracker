@@ -47,7 +47,7 @@ public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
 
 	@Override
 	public HourType getHourType(int id) {
-		return this.jdbcTemplate.queryForObject(GET_HOUR_TYPE, new Object[] { id }, new HourTypeRowMapper());
+		return (HourType) this.jdbcTemplate.queryForObject(GET_HOUR_TYPE, new Object[] { id }, new HourTypeRowMapper());
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
 		}
 	}
 	
-	private static class HourTypeRowMapper implements RowMapper<HourType> {
+	private static class HourTypeRowMapper implements RowMapper {
 		public HourType mapRow(ResultSet rs, int rowNum) throws SQLException {
 			HourType hourType = new HourType(rs.getInt("id"));
 			hourType.setName(rs.getString("name"));

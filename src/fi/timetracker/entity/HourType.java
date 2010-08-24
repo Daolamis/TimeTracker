@@ -1,6 +1,5 @@
 package fi.timetracker.entity;
 
-import java.util.List;
 /**
  *  @author Petteri Parviainen
  */
@@ -10,9 +9,7 @@ public class HourType extends Entity{
 	private String description;
 	//toimiala
 	private String branchOfActivity;
-	//Projektit, joissa ko. tuntityyppiä käytetään
-	private List<Project> projects;
-	
+			
 	public HourType(){
 		super(null);
 	}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		 <property name="driverClassName" value="org.postgresql.Driver" />
+		 <property name="url" value="jdbc:postgresql://localhost/timetracker" />
+		 <property name="username" value="postgres" />
+		 <property name="password" value="lumituhka" />
+ 	</bean>   
+	
+    <bean id="abstractDao" abstract="true">
+        <property name="dataSource" ref="datasource"/>
+    </bean>    
+    <bean id="personDao" class="fi.timetracker.db.PersonDAOImpl" parent="abstractDao"/>    
+    <bean id="projectDao" class="fi.timetracker.db.ProjectDAOImpl" parent="abstractDao"/>        
+    <bean id="passwordDao" class="fi.timetracker.db.PasswordDaoImpl" parent="abstractDao"/>
+    <bean id="hourTypeDao" class="fi.timetracker.db.HourTypeDAOImpl" parent="abstractDao"/>
+    <bean id="workHourType" class="fi.timetracker.db.WorkHourDAOImpl" parent="abstractDao"/>
+    
+    <bean id="databaseFacade" class="fi.timetracker.db.DatabaseFacadeImpl">
+    	<property name="projectDAO" ref="projectDao"/>
+    	<property name="personDAO" ref="personDao"/>
+    	<property name="passwordDAO" ref="passwordDao"/>
+    	<property name="hourTypeDAO" ref="hourTypeDao"/>
+    </bean>
+
+    <bean id="abstractController" abstract="true">
+        <property name="facade" ref="databaseFacade"/>
+        <property name="sessionForm" value="false"/>        
+    </bean>
+
+    <bean name="loginController" class="fi.timetracker.web.LoginController" parent="abstractController">
+    	<property name="commandClass" value="fi.timetracker.web.LoginCommand"/>
+    	<property name="commandName" value="login"/>
+    	<property name="formView" value="login"/>
+    	<property name="successView" value="front_page"/>    										
+    </bean>
+    
+    <bean name="findPersonsController" class="fi.timetracker.web.FindPersonsController" parent="abstractController">
+    	<property name="commandClass" value="fi.timetracker.web.FindPersonsCommand"/>
+    	<property name="formView" value="find_persons"/>
+    	<property name="successView" value="find_persons"/>
+    </bean>
+    
+    <bean name="personController" class="fi.timetracker.web.PersonController" parent="abstractController">
+    	<property name="commandClass" value="fi.timetracker.entity.Person"/>
+    	<property name="formView" value="person"/>
+    	<property name="successView" value="person"/>
+    </bean>
+    
+    <bean name="projectController" class="fi.timetracker.web.ProjectController" parent="abstractController">
+    	<property name="commandClass" value="fi.timetracker.entity.Project"/>
+    	<property name="formView" value="project"/>
+    	<property name="successView" value="project"/>
+    </bean>
+    
+    <bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	   <property name="mappings">
+		<props>
+		   <prop key="loginController">loginController</prop>
+		   <prop key="personController">personController</prop>
+		   <prop key="projectController">projectController</prop>
+		 </props>
+	   </property>
+	</bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>

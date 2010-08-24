@@ -2,10 +2,12 @@ package fi.timetracker.db;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Formatter;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import fi.timetracker.db.PersonDAOImpl.PersonRowMapper;
@@ -35,9 +37,13 @@ public class PasswordDaoImpl implements PasswordDAO {
 	@Override
 	public Person login(String login, String password) {
 		String hash = hashPassword(password);
-		Person person = this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{login, hash}, new PersonRowMapper());
-		if(person != null){
-			this.jdbcTemplate.update(UPDATE_LASTLOGIN, new Object[]{person.getId()});
+		Person person = null;
+		try{
+		person = (Person) this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{login, hash}, new PersonRowMapper());
+		this.jdbcTemplate.update(UPDATE_LASTLOGIN, new Object[]{new Date(), person.getId()});
+		} catch(EmptyResultDataAccessException erdae){
+			// Salasana tai käyttäjätunnus oli väärin,
+			//joten ei tehda mitään, annetaan NULLin palautua
 		}
 		return person;
 	}
@@ -80,5 +86,9 @@ public class PasswordDaoImpl implements PasswordDAO {
 		} catch (NoSuchAlgorithmException nse) {
 			throw new RuntimeException("Salausalgoritm1 SHA1 ei toimi? WTF!", nse);
 		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(hashPassword("nimda"));
 	}
 }

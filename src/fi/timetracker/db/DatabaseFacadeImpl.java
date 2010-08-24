@@ -7,7 +7,6 @@ import java.util.Set;
 import fi.timetracker.entity.HourType;
 import fi.timetracker.entity.Person;
 import fi.timetracker.entity.Project;
-import fi.timetracker.entity.SuperUser;
 import fi.timetracker.entity.Worker;
 
 /** 
@@ -79,7 +78,7 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 		return this.getHourType(id);
 	}
 	@Override
-	public Person savePerson(SuperUser superuser, Person person) {
+	public Person savePerson(Person person) {
 		Integer id = this.personDAO.savePerson(person);
 		if(person.getRole() != Person.Role.SUPERUSER){
 			//Liitetaan työntekijä projekteihin
