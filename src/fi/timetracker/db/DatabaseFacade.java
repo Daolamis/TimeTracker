@@ -33,4 +33,8 @@ public interface DatabaseFacade {
 	public List<HourType> getAllHourTypes();
 	
 	public void joinWorkerToProject(Integer workerId, Set<Integer> projects, Set<Integer> focusProjects);
+	
+	public boolean changePassword(Person person, String oldPassword, String newPassword);
+	
+	public String generatePassword(Person person);
 }

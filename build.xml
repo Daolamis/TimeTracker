@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="Timr tracker" default="compile" basedir=".">
+<project name="Time tracker" default="compile" basedir=".">
 	<!-- Properties -->
 	<property name="project.home" value="."/>
 	<property name="src.dir" value="${project.home}/src"/>
@@ -12,13 +12,7 @@
   <property name="password" value="tomcat"/>
 
   <!-- Configure the custom Ant tasks for the Manager application -->
-  <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"/>
-  <taskdef name="list"      classname="org.apache.catalina.ant.ListTask"/>
-  <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"/>
-  <taskdef name="resources" classname="org.apache.catalina.ant.ResourcesTask"/>
-  <taskdef name="roles"     classname="org.apache.catalina.ant.RolesTask"/>
-  <taskdef name="start"     classname="org.apache.catalina.ant.StartTask"/>
-  <taskdef name="stop"      classname="org.apache.catalina.ant.StopTask"/>
+  <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"/>  
   <taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask"/>
 
 

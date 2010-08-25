@@ -58,7 +58,6 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 				args.add(i);
 			}		
 		}
-		
 		return this.jdbcTemplate.query(query, args.toArray(), new PersonRowMapper());		
 	}
 
@@ -81,7 +80,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 
 	private int updatePerson(Person person) {
 		LinkedList<Object> args = new LinkedList<Object>();
-		args.add(person.getStatus());
+		args.add(person.getStatus().getCode());
 		args.add(person.getFirstname());
 		args.add(person.getLastname());
 		args.add(person.getTitle());
@@ -91,7 +90,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 		args.add(person.getPostalcode());
 		args.add(person.getCity());
 		args.add(person.getCountry());
-		args.add(person.getRole().getCode());
+		args.add(""+person.getRole().getCode());
 		args.add(person.getEmail());
 		args.add(person.getPhone());
 		args.add(person.getId());
@@ -103,23 +102,22 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 	private int insertPerson(Person person) {
 		SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(this.jdbcTemplate)
 				.withTableName("Person").usingGeneratedKeyColumns("id");
-
+		jdbcInsert.usingColumns("status","firstname","lastname","title","birthday",
+				"social_security_suffix","address","postalcode","city","country","role","email","phone");
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("status", person.getStatus().getCode());
 		parameters.addValue("firstname", "" + person.getFirstname());
 		parameters.addValue("lastname", "" + person.getLastname());
 		parameters.addValue("title", "" + person.getTitle());
-		parameters.addValue("birthday", "" + person.getDateOfBirth());
+		parameters.addValue("birthday", person.getDateOfBirth());
 		parameters.addValue("social_security_suffix", person.getSocialSecuritySuffix());
 		parameters.addValue("address", person.getAddress());
 		parameters.addValue("postalcode", person.getPostalcode());
 		parameters.addValue("city", person.getCity());
 		parameters.addValue("country", person.getCountry());
-		parameters.addValue("role", person.getRole().getCode());
+		parameters.addValue("role", ""+person.getRole().getCode());
 		parameters.addValue("email", person.getEmail());
 		parameters.addValue("phone", person.getPhone());
-		parameters.addValue("creator", new Integer(1));
-
 		Number id = jdbcInsert.executeAndReturnKey(parameters);
 		return id.intValue();
 	}
@@ -127,10 +125,9 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 	protected static class PersonRowMapper implements RowMapper {
 
 		public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Person person = Person.createInstance(rs.getString("role")
-					.charAt(0), rs.getInt("id"));
-
-			person.setStatusFromCode(rs.getString("status").charAt(0));
+			Person person = new Person(rs.getInt("id"));
+			person.setRoleCode(rs.getString("role"));
+			person.setStatusFromCode(rs.getString("status"));
 			person.setFirstname(rs.getString("firstname"));
 			person.setLastname(rs.getString("lastname"));
 			person.setTitle(rs.getString("title"));

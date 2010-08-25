@@ -28,7 +28,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 	private static final String GET_ALL = "SELECT * FROM project";
 	private static final String GET_PROJECT = "SELECT * FROM project WHERE id = ?";
 	private static final String GET_WORKERS_PROJECTS = "SELECT project_id FROM "
-			+ "persons_projects WHERE person_id = ? AND status = 'A'";
+			+ "person_projects WHERE person_id = ? AND status = 'J'";
 
 	// person_projects.status kertoo onko työntekijä liitetty projektiin
 	// 'U' (unjoined) ja 'J' (joined)
@@ -65,7 +65,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 		LinkedList<Object> args = new LinkedList<Object>();
 		args.add(project.getName());
 		args.add(project.getDescription());
-		args.add(project.getStatus());
+		args.add(project.getStatusCode());
 		args.add(project.getId());
 		
 		this.jdbcTemplate.update(UPDATE, args.toArray());
@@ -75,11 +75,11 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 	private int insertProject(Project project) {
 		SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(this.jdbcTemplate)
 				.withTableName("Project").usingGeneratedKeyColumns("id");
-
+		jdbcInsert.usingColumns("status","name","description");
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("status", project.getStatus().getCode());
-		parameters.addValue("name", "" + project.getName());
-		parameters.addValue("description", "" + project.getDescription());
+		parameters.addValue("name", project.getName());
+		parameters.addValue("description", project.getDescription());
 		Number id = jdbcInsert.executeAndReturnKey(parameters);
 		return id.intValue();
 	}
@@ -130,7 +130,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 			Project project = new Project(rs.getInt("id"));
 			project.setName(rs.getString("name"));
 			project.setDescription(rs.getString("description"));
-			project.setStatusFromCode(rs.getString("status").charAt(0));
+			project.setStatusCode(rs.getString("status"));
 			project.setCreated(rs.getDate("created"));
 			project.setUpdated(rs.getTimestamp("updated"));
 			return project;

@@ -14,7 +14,7 @@ public class LogoutController extends AbstractController {
 	public ModelAndView handleRequestInternal(HttpServletRequest request,
 			HttpServletResponse response) {
 		request.getSession().invalidate();
-		return new ModelAndView("login");
+		return new ModelAndView("login").addObject("login", new LoginCommand());
 	}
 
 }

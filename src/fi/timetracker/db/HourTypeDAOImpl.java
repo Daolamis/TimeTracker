@@ -70,11 +70,11 @@ public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
 	private int insertHourType(HourType type){
 		SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(this.jdbcTemplate)
 		.withTableName("hour_type").usingGeneratedKeyColumns("id");
-		
+		jdbcInsert.usingColumns("name","description","branch_of_activity");
 		MapSqlParameterSource parameters = new MapSqlParameterSource();		
-		parameters.addValue("name", "" + type.getName());
-		parameters.addValue("description", "" + type.getDescription());
-		parameters.addValue("branch_of_activity", "" + type.getBranchOfActivity());		
+		parameters.addValue("name", type.getName());
+		parameters.addValue("description", type.getDescription());
+		parameters.addValue("branch_of_activity", type.getBranchOfActivity());		
 		Number id = jdbcInsert.executeAndReturnKey(parameters);
 		return id.intValue();
 		
@@ -101,9 +101,11 @@ public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
 	@Override
 	public void joinHourTypesToProject(int projectId,
 			Set<Integer> hourTypeIds) {
-		this.jdbcTemplate.update(DELETE_JOINS);
-		for(Integer hourtypeId:hourTypeIds){
-			this.jdbcTemplate.update(JOIN_TO_PROJECT, new Object[] {projectId, hourtypeId});
+		if(hourTypeIds != null && hourTypeIds.size() > 0){
+			this.jdbcTemplate.update(DELETE_JOINS);
+			for(Integer hourtypeId:hourTypeIds){
+				this.jdbcTemplate.update(JOIN_TO_PROJECT, new Object[] {projectId, hourtypeId});
+			}
 		}
 	}
 	

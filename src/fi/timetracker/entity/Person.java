@@ -1,16 +1,19 @@
 package fi.timetracker.entity;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 
  * @author Petteri Parviainen
  *
  */
-public abstract class Person extends Entity {
+public class Person extends Entity {
 	
-	protected Person(Integer id){
+	public Person(Integer id){
 		super(id);
+		this.projects = new LinkedList<Integer>();
 	}
 		
 	public enum PersonStatus {ACTIVE('A'), CLOSED('C');
@@ -31,9 +34,9 @@ public abstract class Person extends Entity {
 		private Role(char code){
 			this.code = code;
 		}
-		public char getCode(){
-			return this.code;
-		}	
+		public String getCode(){
+			return ""+this.code;
+		}		
 	};
 	
 	private Role role;
@@ -53,48 +56,43 @@ public abstract class Person extends Entity {
 	private Date lastlogin;
 	private Date created;
 	//private Person creator;
-	
-	public static Person createInstance(char rolecode, Integer id){
-		 switch (rolecode) {
-	      case 'W': 
-	           return new Worker(id);
-	      case 'M': 
-	    	  return new Manager(id);
-	      case 'S': 
-	    	  return new SuperUser(id);
-	      default:
-	    	  throw new AssertionError("Unknown rolecode: " + rolecode);	        
-	    }
+	private List<Integer> projects; //projektin pääavaimia (työntekijä kuuluu ko. projekteihin)
+
+	public List<Integer> getProjects() {
+		return projects;
+	}
+	public void setProjects(List<Integer> projects) {
+		this.projects = projects;
 	}
 	
-	public static Person createInstance(PersonCommand command){
-		Person instance = createInstance(command.getRole().getCode(), null); 
-		if(instance.getRole() != Role.SUPERUSER){
-			((Worker) instance).setProjects(command.getProjects());
-		}	    
-		instance.setFirstname(command.getFirstname());
-		instance.setLastname(command.getLastname());
-		instance.setTitle(command.getTitle());
-		instance.setAddress(command.getAddress());
-		instance.setPostalcode(command.getPostalcode());
-		instance.setCity(command.getCity());
-		instance.setCountry(command.getCountry());
-		instance.setEmail(command.getEmail());
-		instance.setPhone(command.getPhone());
-		instance.setDateOfBirth(command.getDateOfBirth());
-		instance.setSocialSecuritySuffix(command.getSocialSecuritySuffix());		
-		return instance;
-		
+	public int getProjectSize(){
+		return this.projects.size();
 	}
 	
 	public Role getRole() {
 		return role;
 	}
 	
-	protected void setRole(Role role) {
-		this.role = role;
+	public String getRoleCode() {
+		return this.role.getCode();
 	}
-
+	
+	public void setRoleCode(String code) {
+		switch (code.charAt(0)) {
+		case 'S':
+			this.role= Role.SUPERUSER;
+			break;
+		case 'M':
+			this.role= Role.MANAGER;
+			break;
+		case 'W':
+			this.role= Role.WORKER;
+			break;
+		default:
+			throw new AssertionError("Unknown role: " + code);
+		}
+	}
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -176,8 +174,8 @@ public abstract class Person extends Entity {
 		this.status = status;
 	}
 	
-	public void setStatusFromCode(char code) {
-		 switch (code) {
+	public void setStatusFromCode(String code) {
+		 switch (code.charAt(0)) {
 	      case 'A': 
 	        this.status = PersonStatus.ACTIVE;
 	        break;   

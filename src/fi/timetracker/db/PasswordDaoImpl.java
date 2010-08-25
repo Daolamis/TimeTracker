@@ -13,10 +13,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import fi.timetracker.db.PersonDAOImpl.PersonRowMapper;
 import fi.timetracker.entity.Person;
 
-/**
- * 
- * @author Petteri Parviainen
- * 
+/** 
+ * @author Petteri Parviainen 
  */
 public class PasswordDaoImpl implements PasswordDAO {
 
@@ -39,8 +37,8 @@ public class PasswordDaoImpl implements PasswordDAO {
 		String hash = hashPassword(password);
 		Person person = null;
 		try{
-		person = (Person) this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{login, hash}, new PersonRowMapper());
-		this.jdbcTemplate.update(UPDATE_LASTLOGIN, new Object[]{new Date(), person.getId()});
+			person = (Person) this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{login, hash}, new PersonRowMapper());
+			this.jdbcTemplate.update(UPDATE_LASTLOGIN, new Object[]{new Date(), person.getId()});
 		} catch(EmptyResultDataAccessException erdae){
 			// Salasana tai käyttäjätunnus oli väärin,
 			//joten ei tehda mitään, annetaan NULLin palautua
@@ -51,7 +49,8 @@ public class PasswordDaoImpl implements PasswordDAO {
 	@Override
 	public boolean changePassword(Person person, String oldPassword,
 			String newPassword) {
-		Person check = this.login(person.getEmail(), oldPassword);
+		Person check = null;
+		check = this.login(person.getEmail(), oldPassword);		
 		if(check != null && (check.getId().equals(person.getId()))){
 			newPassword = hashPassword(newPassword);
 			this.changePassword(person.getId(), newPassword);

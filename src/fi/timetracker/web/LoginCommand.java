@@ -6,6 +6,8 @@ public class LoginCommand {
 	
 	private String userId;
 	private String password;
+	private String retypePassword;
+	private String oldPassword;
 	
 	public String getUserId() {
 		return userId;
@@ -18,5 +20,18 @@ public class LoginCommand {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getRetypePassword() {
+		return retypePassword;
+	}
+	public void setRetypePassword(String retypePassword) {
+		this.retypePassword = retypePassword;
+	}
+	public String getOldPassword() {
+		return oldPassword;
+	}
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
 	}
 }

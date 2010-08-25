@@ -26,6 +26,7 @@ public class LoginController extends SimpleFormController{
 			mav = new ModelAndView(this.getSuccessView());
 		}else{
 			mav = new ModelAndView(this.getFormView(), this.getCommandName(), new LoginCommand());
+			mav.addObject("message", "Käyttäjätunnus tai salasana oli virheellinen");
 		}
 		return mav;
 	}

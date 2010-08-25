@@ -18,6 +18,13 @@
 	<tr>
 		<td align="center" bgcolor="lightblue">Kirjaudu</td>
 	</tr>
+	<c:if test="${not empty message}">	
+		<tr>
+			<td align="center" bgcolor="#FF8B8B">
+				<c:out value="${message}" escapeXml="false"/><br/>
+			</td>
+		</tr>	
+	</c:if> 
 	<tr>
 		<td>
 		<table border="0" width="100%">

@@ -1,6 +1,7 @@
 package fi.timetracker.entity;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,11 +30,12 @@ public class Project extends Entity {
 	private ProjectStatus status;
 	private Date created;
 
-	private List<Worker> workers;
+	private List<Person> workers;
 	private Set<Integer> hourtypes;
 	
 	public Project(){
 		super(null);
+		this.hourtypes = new HashSet<Integer>();
 	}
 	
 	public Project(Integer id){
@@ -64,8 +66,12 @@ public class Project extends Entity {
 		this.status = status;
 	}
 	
-	public void setStatusFromCode(char code) {
-		 switch (code) {
+	public String getStatusCode(){
+		return this.status.getCode();
+	}
+	
+	public void setStatusCode(String code) {
+		 switch (code.charAt(0)) {
 	      case 'A': 
 	        this.status = ProjectStatus.ACTIVE;
 	        break;   
@@ -85,11 +91,11 @@ public class Project extends Entity {
 		this.created = created;
 	}
 
-	public List<Worker> getWorkers() {
+	public List<Person> getWorkers() {
 		return workers;
 	}
 
-	public void setWorkers(List<Worker> workers) {
+	public void setWorkers(List<Person> workers) {
 		this.workers = workers;
 	}
 

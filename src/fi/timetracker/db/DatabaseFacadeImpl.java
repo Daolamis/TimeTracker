@@ -7,8 +7,6 @@ import java.util.Set;
 import fi.timetracker.entity.HourType;
 import fi.timetracker.entity.Person;
 import fi.timetracker.entity.Project;
-import fi.timetracker.entity.Worker;
-
 /** 
  * @author Petteri Parviainen
  */
@@ -52,7 +50,7 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 		Person person = this.personDAO.getPerson(id);
 		if(person.getRole() != Person.Role.SUPERUSER){
 			List<Integer> list = this.projectDAO.findProjectsByWorker(person.getId());
-			((Worker) person).setProjects(new HashSet<Integer>(list));			
+			person.setProjects(list);			
 		}
 		return person;
 	}
@@ -80,22 +78,31 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	@Override
 	public Person savePerson(Person person) {
 		Integer id = this.personDAO.savePerson(person);
-		if(person.getRole() != Person.Role.SUPERUSER){
-			//Liitetaan työntekijä projekteihin
-			Worker worker  = (Worker) person;
-			this.projectDAO.joinWorkerToProjects(id, worker.getProjects(), null);
+		if(person.getRole() != Person.Role.SUPERUSER && (person.getProjects()
+				!= null && person.getProjects().size()>0)){
+			//Liitetaan työntekijä projekteihin			
+			this.projectDAO.joinWorkerToProjects(id, new HashSet(person.getProjects()), null);
 		}
 		return this.getPerson(id);
 	}
 	@Override
 	public Project saveProject(Project project) {
-		this.projectDAO.saveProject(project);
-		this.hourTypeDAO.joinHourTypesToProject(project.getId(), project.getHourtypes());
-		return this.getProject(project.getId());
+		Integer id = this.projectDAO.saveProject(project);		
+		this.hourTypeDAO.joinHourTypesToProject(id, project.getHourtypes());
+		return this.getProject(id);
 	}
 	@Override
 	public void joinWorkerToProject(Integer workerId, Set<Integer> projects,
 			Set<Integer> focusProjects) {
 		this.projectDAO.joinWorkerToProjects(workerId, projects, focusProjects);		
+	}
+	@Override
+	public boolean changePassword(Person person, String oldPassword,
+			String newPassword) {
+		return this.passwordDAO.changePassword(person, oldPassword, newPassword);		
+	}
+	@Override
+	public String generatePassword(Person person) {
+		return this.passwordDAO.generatePassword(person);
 	}	
 }
