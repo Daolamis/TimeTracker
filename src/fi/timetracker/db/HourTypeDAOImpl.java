@@ -32,7 +32,7 @@ public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
 	private static final String DELETE_JOINS = "DELETE FROM project_hour_types " +
 			"WHERE project_id = ?";
 	private static final String JOIN_TO_PROJECT = "INSERT INTO " +
-			"project_hour_types (project_id, hour_type_id VALUES (?,?))";
+			"project_hour_types (project_id, hour_type_id) VALUES (?,?)";
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -102,7 +102,7 @@ public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
 	public void joinHourTypesToProject(int projectId,
 			Set<Integer> hourTypeIds) {
 		if(hourTypeIds != null && hourTypeIds.size() > 0){
-			this.jdbcTemplate.update(DELETE_JOINS);
+			this.jdbcTemplate.update(DELETE_JOINS, new Object[] {projectId});
 			for(Integer hourtypeId:hourTypeIds){
 				this.jdbcTemplate.update(JOIN_TO_PROJECT, new Object[] {projectId, hourtypeId});
 			}

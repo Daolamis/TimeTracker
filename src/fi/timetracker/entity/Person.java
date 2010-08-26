@@ -1,8 +1,10 @@
 package fi.timetracker.entity;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -13,7 +15,7 @@ public class Person extends Entity {
 	
 	public Person(Integer id){
 		super(id);
-		this.projects = new LinkedList<Integer>();
+		this.projects = new HashSet<Integer>();
 	}
 		
 	public enum PersonStatus {ACTIVE('A'), CLOSED('C');
@@ -56,13 +58,13 @@ public class Person extends Entity {
 	private Date lastlogin;
 	private Date created;
 	//private Person creator;
-	private List<Integer> projects; //projektin pääavaimia (työntekijä kuuluu ko. projekteihin)
+	private Set<Integer> projects; //projektin pääavaimia (työntekijä kuuluu ko. projekteihin)
 
 	public List<Integer> getProjects() {
-		return projects;
+		return new LinkedList<Integer>(projects);
 	}
 	public void setProjects(List<Integer> projects) {
-		this.projects = projects;
+		this.projects = new HashSet<Integer>(projects);
 	}
 	
 	public int getProjectSize(){

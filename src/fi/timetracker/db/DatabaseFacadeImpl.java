@@ -42,8 +42,8 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 		return this.hourTypeDAO.getHourTypes();
 	}
 	@Override
-	public List<Project> getAllProjects() {		
-		return this.projectDAO.getAllProjects();
+	public List<Project> getAllProjects(boolean onlyActive) {		
+		return this.projectDAO.getAllProjects(onlyActive);
 	}
 	@Override
 	public Person getPerson(Integer id) {
@@ -58,7 +58,7 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	public Project getProject(Integer id) {
 		Project project = projectDAO.getProject(id);
 		List<Integer> list =  this.hourTypeDAO.getProjectHourTypes(id);		
-		project.setHourtypes(new HashSet<Integer>(list));
+		project.setHourtypes(list);
 		return project;
 	}
 	@Override
@@ -88,7 +88,7 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	@Override
 	public Project saveProject(Project project) {
 		Integer id = this.projectDAO.saveProject(project);		
-		this.hourTypeDAO.joinHourTypesToProject(id, project.getHourtypes());
+		this.hourTypeDAO.joinHourTypesToProject(id, new HashSet<Integer>(project.getHourtypes()));
 		return this.getProject(id);
 	}
 	@Override

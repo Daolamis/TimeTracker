@@ -66,7 +66,7 @@ public class PersonController extends SimpleFormController{
 	
 	private Map getReferenceMap(){
 		Map referenceData = new HashMap();
-		List<Project> projects = facade.getAllProjects();
+		List<Project> projects = facade.getAllProjects(true);
 		HashMap<Integer, String> allProjects = new HashMap<Integer, String>();
 		for(Project project:projects){
 			allProjects.put(project.getId(), project.getName());

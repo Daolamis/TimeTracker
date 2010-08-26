@@ -62,9 +62,7 @@
     	<property name="successView" value="front_page"/>
     </bean>
     
-    <bean name="timetrackController" class="fi.timetracker.web.TimetrackController" parent="abstractController">
-    	
-    </bean>
+    <bean name="timetrackController" class="fi.timetracker.web.TimetrackController" parent="abstractController"/>
     
     <bean name="projectController" class="fi.timetracker.web.ProjectController" parent="abstractController">
     	<property name="commandClass" value="fi.timetracker.entity.Project"/>
@@ -73,11 +71,19 @@
     	<property name="successView" value="front_page"/>
     </bean>
     
-    <bean name="listProjectsController" class="fi.timetracker.web.ListProjectsController" parent="abstractController">    	
-    </bean>
-    
+    <bean name="listProjectsController" class="fi.timetracker.web.ListProjectsController" parent="abstractController"/>    	
+        
     <bean name="logoutController" class="fi.timetracker.web.LogoutController"/>
     
+    <bean name="hourTypeController" class="fi.timetracker.web.HourTypeController" parent="abstractController">
+    	<property name="sessionForm" value="false"/>
+    	<property name="commandClass" value="fi.timetracker.entity.HourType"/>
+    	<property name="commandName" value="hourtype"/>
+    	<property name="formView" value="hourtype"/>
+    	<property name="successView" value="front_page"/>
+    </bean>
+    
+    <bean name="listHourTypesController" class="fi.timetracker.web.ListHourTypesController" parent="abstractController"/>
     
     <bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 	   <property name="mappings">
@@ -87,6 +93,8 @@
 		   <prop key="findPersonsController">findPersonsController</prop>		   
 		   <prop key="projectController">projectController</prop>
 		   <prop key="listProjectsController">listProjectsController</prop>
+		   <prop key="hourTypeController">hourTypeController</prop>
+		   <prop key="listHourTypesController">listHourTypesController</prop>
 		   <prop key="timetrackController">timetrackController</prop>
 		   <prop key="passwordController">passwordController</prop>
 		   <prop key="logoutController">logoutController</prop>

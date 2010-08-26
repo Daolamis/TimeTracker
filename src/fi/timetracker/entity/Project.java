@@ -2,6 +2,7 @@ package fi.timetracker.entity;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,7 @@ public class Project extends Entity {
 	
 	public Project(Integer id){
 		super(id);
+		this.hourtypes = new HashSet<Integer>();
 	}
 
 	public String getName() {
@@ -99,11 +101,11 @@ public class Project extends Entity {
 		this.workers = workers;
 	}
 
-	public Set<Integer> getHourtypes() {
-		return hourtypes;
+	public List<Integer> getHourtypes() {
+		return new LinkedList<Integer>(hourtypes);
 	}
 
-	public void setHourtypes(Set<Integer> hourtypes) {
-		this.hourtypes = hourtypes;
+	public void setHourtypes(List<Integer> hourtypes) {
+		this.hourtypes = new HashSet<Integer>(hourtypes);
 	}
 }

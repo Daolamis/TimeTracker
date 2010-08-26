@@ -62,7 +62,7 @@ public class ProjectController extends SimpleFormController {
 		List<HourType> hourTypes = facade.getAllHourTypes();
 		HashMap<Integer, String> allHourTypes = new HashMap<Integer, String>();
 		for(HourType type:hourTypes){
-			allHourTypes.put(type.getId(), type.getName());
+			allHourTypes.put(type.getId(), type.getName()+" ("+type.getBranchOfActivity()+")");
 		}
 		referenceData.put("allHourTypes", allHourTypes);
 		return referenceData;

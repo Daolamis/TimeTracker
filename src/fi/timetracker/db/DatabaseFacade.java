@@ -24,7 +24,7 @@ public interface DatabaseFacade {
 	
 	public Project getProject(Integer id);
 	
-	public List<Project> getAllProjects();
+	public List<Project> getAllProjects(boolean onlyActive);
 	
 	public HourType saveHourType(HourType hourType);
 	

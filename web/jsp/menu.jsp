@@ -3,12 +3,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <c:if test="${applicationScope.loginData.roleCode != 'S'}">
-	<a href="timetrackController">Tuntikirjanpito</a>	<br/>
+	<a href="timetrackController">Tuntikirjanpito</a><br/>
 </c:if>
 <c:if test="${applicationScope.loginData.roleCode == 'S'}">
 	<a href="personController">Lis‰‰ uusi k‰ytt‰j‰</a><br/>
 	<a href="findPersonsController">Etsi k‰ytt‰ji‰</a><br/>
 	<a href="projectController">Lis‰‰ projekti</a><br/>
 	<a href="listProjectsController">Listaa projektit</a><br/>
+	<a href="hourTypeController">Lis‰‰ tuntityyppi</a><br/>
+	<a href="listHourTypesController">Listaa tuntityypit</a><br/>
 </c:if>
 <a href="passwordController">Vaihda salasana</a><br/>

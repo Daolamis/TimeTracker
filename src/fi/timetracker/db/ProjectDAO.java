@@ -18,7 +18,7 @@ public interface ProjectDAO {
 	
 	public Project getProject(int id);
 	
-	public List<Project> getAllProjects();
+	public List<Project> getAllProjects(boolean onlyActive);
 	
 	public void joinWorkerToProjects(Integer workerId, Set<Integer> projectsToJoin, Set<Integer> focusProjects);
  

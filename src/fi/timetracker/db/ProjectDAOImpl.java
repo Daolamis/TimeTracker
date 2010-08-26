@@ -26,6 +26,7 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 			+ "description = ?, status = ?, updated = CURRENT_TIMESTAMP WHERE id = ?  ";
 
 	private static final String GET_ALL = "SELECT * FROM project";
+	private static final String GET_ALL_ACTIVE = "SELECT * FROM project WHERE status = 'A'";
 	private static final String GET_PROJECT = "SELECT * FROM project WHERE id = ?";
 	private static final String GET_WORKERS_PROJECTS = "SELECT project_id FROM "
 			+ "person_projects WHERE person_id = ? AND status = 'J'";
@@ -96,8 +97,12 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 	}
 
 	@Override
-	public List<Project> getAllProjects() {
-		return this.jdbcTemplate.query(GET_ALL, new ProjectRowMapper());
+	public List<Project> getAllProjects(boolean onlyActive) {
+		if(onlyActive){
+			return this.jdbcTemplate.query(GET_ALL_ACTIVE, new ProjectRowMapper());
+		}else{
+			return this.jdbcTemplate.query(GET_ALL, new ProjectRowMapper());
+		}
 	}
 
 	@Override
