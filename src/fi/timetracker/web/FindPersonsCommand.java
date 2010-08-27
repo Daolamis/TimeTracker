@@ -40,5 +40,4 @@ public class FindPersonsCommand {
 	public void setProjects(Set<Integer> projects) {
 		this.projects = projects;
 	}
-
 }

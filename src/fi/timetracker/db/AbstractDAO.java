@@ -20,7 +20,7 @@ public abstract class AbstractDAO {
 	
 	protected static String generateInCriteria(int numberOfParams){
 		StringBuffer inCriteria=new StringBuffer();
-		inCriteria.append("  AND person_project.projects_id IN (?");
+		inCriteria.append("  AND person_projects.project_id IN (?");
 		for(int i = 1; i < numberOfParams; i++){
 			inCriteria.append(",?");
 		}

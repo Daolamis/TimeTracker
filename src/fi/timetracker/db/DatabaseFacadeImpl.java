@@ -34,7 +34,24 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	
 	@Override
 	public List<Person> findPersons(String firstname, String lastname,
-			String email, Set<Integer> projects) {		
+			String email, Set<Integer> projects) {
+		if(firstname.length() == 0){
+			firstname = "%";
+		}else{
+			firstname = firstname.replace('*','%').replace('?', '_');
+		}
+		
+		if(lastname.length() == 0){
+			lastname = "%";
+		}else{
+			lastname = lastname.replace('*','%').replace('?', '_');
+		}
+		
+		if(email.length() == 0){
+			email = "%";
+		}else{
+			email = email.replace('*','%').replace('?', '_');
+		}
 		return this.personDAO.findPersons(firstname, lastname, email, projects);
 	}
 	@Override
@@ -50,7 +67,7 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 		Person person = this.personDAO.getPerson(id);
 		if(person.getRole() != Person.Role.SUPERUSER){
 			List<Integer> list = this.projectDAO.findProjectsByWorker(person.getId());
-			person.setProjects(list);			
+			person.setProjects(new HashSet<Integer>(list));			
 		}
 		return person;
 	}

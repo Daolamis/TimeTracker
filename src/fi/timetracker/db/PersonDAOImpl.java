@@ -33,7 +33,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 			+ " country = ?, role = ?, email = ?, phone = ?, updated = CURRENT_TIMESTAMP WHERE id = ?";
 	private static final String GET_PERSON = "SELECT * FROM Person WHERE id = ?";
 	private static final String FIND = "SELECT DISTINCT person.* FROM person LEFT JOIN person_projects ON person.id = person_projects.person_id WHERE firstname " +
-			"LIKE ? AND lastname LIKE ? AND email LIKE ?";
+			"ILIKE ? AND lastname ILIKE ? AND email ILIKE ?";
 	
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);

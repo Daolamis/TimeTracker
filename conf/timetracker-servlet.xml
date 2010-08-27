@@ -39,11 +39,10 @@
     </bean>
     
     <bean name="findPersonsController" class="fi.timetracker.web.FindPersonsController" parent="abstractController">
-    <!--
-     	<property name="commandClass" value="fi.timetracker.web.FindPersonsCommand"/>
-    	<property name="formView" value="find_persons"/>
-    	<property name="successView" value="find_persons"/>
-     -->
+       	<property name="commandClass" value="fi.timetracker.web.FindPersonsCommand"/>
+       	<property name="commandName" value="findPersons"/>
+    	<property name="formView" value="person_list"/>
+    	<property name="successView" value="person_list"/>
     </bean>
     
     <bean name="personController" class="fi.timetracker.web.PersonController" parent="abstractController">

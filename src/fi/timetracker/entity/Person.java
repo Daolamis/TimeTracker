@@ -2,8 +2,6 @@ package fi.timetracker.entity;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,11 +58,11 @@ public class Person extends Entity {
 	//private Person creator;
 	private Set<Integer> projects; //projektin pääavaimia (työntekijä kuuluu ko. projekteihin)
 
-	public List<Integer> getProjects() {
-		return new LinkedList<Integer>(projects);
+	public Set<Integer> getProjects() {
+		return projects;
 	}
-	public void setProjects(List<Integer> projects) {
-		this.projects = new HashSet<Integer>(projects);
+	public void setProjects(Set<Integer> projects) {
+		this.projects = projects;
 	}
 	
 	public int getProjectSize(){

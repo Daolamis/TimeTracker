@@ -5,7 +5,6 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div id="maincol">
 <h2>Tuntikirjaus</h2>
-
 <table border="1">
 <tr><td>
 <table border="0"  cellpadding="0"  cellspacing="0" width="500px">
