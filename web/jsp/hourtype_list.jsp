@@ -4,15 +4,15 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div id="maincol">
 	
-<h2>Kaikki projektit</h2>
+<h2>Kaikki tuntityypit</h2>
 <br />
 <table border="0" cellpadding="0" cellspacing="0" width="500px">
 	<tr>
 		<td bgcolor="#A1A1A1">Nimi</td>
-		<td bgcolor=#A1A1A1>Tila</td>		
+		<td bgcolor=#A1A1A1>Toimiala</td>		
 		<td bgcolor="#A1A1A1">Toiminta</td>		
 	</tr>
-	<c:forEach items="${projects}" var="project" varStatus="status">
+	<c:forEach items="${hourtypes}" var="hourtype" varStatus="status">
 		<c:set var="color" value="#E6ECFF" />	
           <c:if test="${status.count%2==0}">
             <c:set var="color" value="#CDCDCD" />
@@ -21,14 +21,9 @@
     	<td colspan="6" height="2" bgcolor="GRAY"/>
     </tr>
 	<tr>
-		<td bgcolor="<c:out value="${color}"/>"><c:out value="${project.name}"/></td>		
-		<td bgcolor="<c:out value="${color}"/>">
-			<c:choose>
-				<c:when test="${project.statusCode == 'A'}">Aktiivinen</c:when>				
-				<c:otherwise>Suljettu</c:otherwise>			
-			</c:choose>		
-		</td>		
-		<td bgcolor="<c:out value="${color}"/>"><a href="projectController?id=<c:out value="${project.id}"/>">[muokkaa]</a></td>		
+		<td bgcolor="<c:out value="${color}"/>"><c:out value="${hourtype.name}"/></td>		
+		<td bgcolor="<c:out value="${color}"/>"><c:out value="${hourtype.branchOfActivity}"/></td>				
+		<td bgcolor="<c:out value="${color}"/>"><a href="hourTypeController?id=<c:out value="${hourtype.id}"/>">[muokkaa]</a></td>		
 	</tr>	
 	</c:forEach>	
 </table>		

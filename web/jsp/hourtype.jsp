@@ -5,8 +5,8 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div id="maincol">
 <c:choose>	
-	<c:when test="${empty project.id}"><h2>Lisää uusi projekti</h2></c:when>
-	<c:otherwise><h2>Muokkaa projektia</h2></c:otherwise>
+	<c:when test="${empty hourtype.id}"><h2>Lisää uusi tuntityyppi</h2></c:when>
+	<c:otherwise><h2>Muokkaa tuntityyppiä</h2></c:otherwise>
 </c:choose>
 <c:if test="${not empty message}">
 	<table width="400px">
@@ -18,12 +18,12 @@
 	</table>
 </c:if> 
 <br />
-<form:form method="POST" action="projectController" commandName="project">
+<form:form method="POST" action="hourTypeController" commandName="hourtype">
 <table border="0" width="400px">
 	<tr>
 		<td width="33%" align="right">ID:</td>
 		<td width="67%" align="left">
-			<c:out value="${project.id}"></c:out>
+			<c:out value="${hourtype.id}"></c:out>
 			<form:hidden path="id"/>
 		</td>		
 	</tr>
@@ -38,24 +38,13 @@
 		<td width="66%" align="left">
 			<form:textarea path="description" rows="5" cols="20"/>
 		</td>
-	</tr>	
-	<tr>
-		<td width="33%" align="right">Rooli:</td>
-		<td width="67%" align="left">
-			Aktiivinen <form:radiobutton path="statusCode" value="A"/> 
-			Suljettu <form:radiobutton path="statusCode" value="C"/> 
-			 
-		</td>		
 	</tr>
-	
 	<tr>
-		<td align="center" colspan="2">
-		<fieldset>
-			<legend>Tuntityypit</legend>
-			<form:checkboxes items="${allHourTypes}" path="hourtypes" />
-		</fieldset>
-		</td>		 
-	</tr>			
+		<td width="33%" align="right">Toimiala:</td>
+		<td width="66%" align="left">
+			<form:input path="branchOfActivity" size="25"/>
+		</td>
+	</tr>
 	<tr>
 		<td align="center" colspan="4">
 			<input type="submit" alignment="center" value="Tallenna"> 
