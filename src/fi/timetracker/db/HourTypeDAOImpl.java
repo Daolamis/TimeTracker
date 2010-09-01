@@ -101,8 +101,8 @@ public class HourTypeDAOImpl extends AbstractDAO implements HourTypeDAO {
 	@Override
 	public void joinHourTypesToProject(int projectId,
 			Set<Integer> hourTypeIds) {
-		if(hourTypeIds != null && hourTypeIds.size() > 0){
-			this.jdbcTemplate.update(DELETE_JOINS, new Object[] {projectId});
+		this.jdbcTemplate.update(DELETE_JOINS, new Object[] {projectId});
+		if(hourTypeIds != null && hourTypeIds.size() > 0){			
 			for(Integer hourtypeId:hourTypeIds){
 				this.jdbcTemplate.update(JOIN_TO_PROJECT, new Object[] {projectId, hourtypeId});
 			}

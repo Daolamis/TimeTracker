@@ -174,7 +174,11 @@ public class Person extends Entity {
 		this.status = status;
 	}
 	
-	public void setStatusFromCode(String code) {
+	public String getStatusCode() {
+		return this.status.getCode();
+	}
+	
+	public void setStatusCode(String code) {
 		 switch (code.charAt(0)) {
 	      case 'A': 
 	        this.status = PersonStatus.ACTIVE;

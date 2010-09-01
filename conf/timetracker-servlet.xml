@@ -26,63 +26,65 @@
     	<property name="passwordDAO" ref="passwordDao"/>
     	<property name="hourTypeDAO" ref="hourTypeDao"/>
     </bean>
-
+    
     <bean id="abstractController" abstract="true">
         <property name="facade" ref="databaseFacade"/>                
     </bean>
+    <bean id="abstractFormController" abstract="true" parent="abstractController">
+        <property name="sessionForm" value="false"/>
+        <property name="successView" value="front_page"/>
+    </bean>
 
-    <bean name="loginController" class="fi.timetracker.web.LoginController" parent="abstractController">
+    <bean name="loginController" class="fi.timetracker.web.LoginController" parent="abstractFormController">
     	<property name="commandClass" value="fi.timetracker.web.LoginCommand"/>
     	<property name="commandName" value="login"/>
+    	<property name="validator"><bean class="fi.timetracker.web.validation.LoginValidator"/></property>    	
     	<property name="formView" value="login"/>
-    	<property name="successView" value="front_page"/>    										
     </bean>
     
-    <bean name="findPersonsController" class="fi.timetracker.web.FindPersonsController" parent="abstractController">
+    <bean name="findPersonsController" class="fi.timetracker.web.FindPersonsController" parent="abstractFormController">
        	<property name="commandClass" value="fi.timetracker.web.FindPersonsCommand"/>
        	<property name="commandName" value="findPersons"/>
     	<property name="formView" value="person_list"/>
     	<property name="successView" value="person_list"/>
     </bean>
     
-    <bean name="personController" class="fi.timetracker.web.PersonController" parent="abstractController">
-    	<property name="sessionForm" value="false"/>
+    <bean name="personController" class="fi.timetracker.web.PersonController" parent="abstractFormController">    	
     	<property name="commandClass" value="fi.timetracker.entity.Person"/>
     	<property name="commandName" value="person"/>
     	<property name="formView" value="person"/>
     	<property name="successView" value="front_page"/>
     </bean>
     
-    <bean name="passwordController" class="fi.timetracker.web.PasswordController" parent="abstractController">
-    	<property name="sessionForm" value="false"/>
-    	<property name="commandClass" value="fi.timetracker.web.LoginCommand"/>
-    	<property name="commandName" value="login"/>
+    <bean name="passwordController" class="fi.timetracker.web.PasswordController" parent="abstractFormController">    	
+    	<property name="commandClass" value="fi.timetracker.web.PasswordCommand"/>
+    	<property name="commandName" value="passwordCommand"/>
+    	<property name="validator"><bean class="fi.timetracker.web.validation.PasswordValidator"/></property>
     	<property name="formView" value="change_password"/>
     	<property name="successView" value="front_page"/>
     </bean>
     
     <bean name="timetrackController" class="fi.timetracker.web.TimetrackController" parent="abstractController"/>
     
-    <bean name="projectController" class="fi.timetracker.web.ProjectController" parent="abstractController">
+    <bean name="projectController" class="fi.timetracker.web.ProjectController" parent="abstractFormController">
     	<property name="commandClass" value="fi.timetracker.entity.Project"/>
     	<property name="commandName" value="project"/>
+    	<property name="validator"><bean class="fi.timetracker.web.validation.ProjectValidator"/></property>
     	<property name="formView" value="project"/>
     	<property name="successView" value="front_page"/>
     </bean>
     
-    <bean name="listProjectsController" class="fi.timetracker.web.ListProjectsController" parent="abstractController"/>    	
-        
-    <bean name="logoutController" class="fi.timetracker.web.LogoutController"/>
-    
-    <bean name="hourTypeController" class="fi.timetracker.web.HourTypeController" parent="abstractController">
-    	<property name="sessionForm" value="false"/>
+    <bean name="hourTypeController" class="fi.timetracker.web.HourTypeController" parent="abstractFormController">    	
     	<property name="commandClass" value="fi.timetracker.entity.HourType"/>
     	<property name="commandName" value="hourtype"/>
+    	<property name="validator"><bean class="fi.timetracker.web.validation.HourTypeValidator"/></property>
     	<property name="formView" value="hourtype"/>
     	<property name="successView" value="front_page"/>
     </bean>
     
     <bean name="listHourTypesController" class="fi.timetracker.web.ListHourTypesController" parent="abstractController"/>
+    <bean name="listProjectsController" class="fi.timetracker.web.ListProjectsController" parent="abstractController"/>        
+    <bean name="logoutController" class="fi.timetracker.web.LogoutController"/>
     
     <bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 	   <property name="mappings">

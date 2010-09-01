@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <jsp:include page="header.jsp"></jsp:include>
 <div id="maincol">
 <h2>Vaihda salasana</h2>
 <br />
-<form:form method="POST" action="passwordController" commandName="login">
+<form:form method="POST" action="passwordController" commandName="passwordCommand">
+<jsp:include page="message_component.jsp"/>
 <table border="0" width="400px">	
 	<tr>
 		<td width="33%" align="right">Vanha salasana:</td>

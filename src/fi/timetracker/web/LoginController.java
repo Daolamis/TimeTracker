@@ -1,5 +1,12 @@
 package fi.timetracker.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -15,9 +22,12 @@ public class LoginController extends SimpleFormController{
 	public void setFacade(DatabaseFacade facade) {
 		this.facade = facade;
 	}
+	
+	
 
 	@Override
-	protected ModelAndView onSubmit(Object command) throws Exception {
+	protected ModelAndView onSubmit(HttpServletRequest request,
+			HttpServletResponse response, Object command, BindException errors) throws Exception {
 		LoginCommand loginCmd = (LoginCommand) command;
 		Person person = facade.login(loginCmd.getUserId(), loginCmd.getPassword());
 		ModelAndView mav = null;		
@@ -25,8 +35,9 @@ public class LoginController extends SimpleFormController{
 			this.getServletContext().setAttribute("loginData", person);
 			mav = new ModelAndView(this.getSuccessView());
 		}else{
-			mav = new ModelAndView(this.getFormView(), this.getCommandName(), new LoginCommand());
-			mav.addObject("message", "Käyttäjätunnus tai salasana oli virheellinen");
+			errors.reject("", "Käyttäjätunnus tai salasana oli virheellinen");
+			Map model = new HashMap();			
+			mav = showForm(request, response, errors, null);			
 		}
 		return mav;
 	}

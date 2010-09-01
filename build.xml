@@ -45,7 +45,7 @@
 		    <classes dir="${build.dir}">
 			    <include name="**/*.class"/>
 		    </classes>
-			<zipfileset dir="lib" prefix="WEB-INF/lib">
+			<lib dir="lib">			
 				<include name="spring-beans.jar"/>
 				<include name="spring-jdbc.jar"/>
 				<include name="spring-context.jar"/>
@@ -53,26 +53,32 @@
 				<include name="spring-tx.jar"/>
 				<include name="spring-webmvc.jar"/>
 				<include name="spring-web.jar"/>
-				<include name="commons-logging-1.1.1.jar"/>
+				<include name="commons-logging-1.1.1.jar"/>				
+				<include name="antlr-3.2.jar"/>				
 				<include name="standard.jar"/>
 				<include name="jstl.jar"/>
-			</zipfileset>			
+			</lib>			
 		    <zipfileset dir="src" prefix="WEB-INF/scr"/>
+			<zipfileset dir="web/css" prefix="css"/>
 			<zipfileset dir="web/jsp" prefix="WEB-INF/jsp"/>
 			<zipfileset file="web/jsp/spring-form.tld" prefix="WEB-INF/tld"/>
-			<zipfileset file="conf/timetracker-servlet.xml" prefix="WEB-INF"/>
-			<zipfileset dir="web/css" prefix="css"/>
+			<zipfileset dir="conf" prefix="WEB-INF">
+				<include name="timetracker-servlet.xml"/>
+				<include name="validator-rules.xml"/>
+				<include name="validation.xml"/>
+			</zipfileset>
+			
 		</war>
 	</target>
 	
-	<target name="redeploy" description="Install web application" depends="undeploy,deploy"/>
+	<target name="redeploy" description="Uudelleen asennetaan sovellus tomcat:iin" depends="undeploy,deploy"/>
 	
-	<target name="deploy" description="Install web application" depends="war">
+	<target name="deploy" description="Asennetaan sovellus tomcat:iin" depends="war">
 	    <deploy url="${url}" username="${username}" password="${password}"
 	            path="/timetracker" war="file:build/timetracker.war"/>
 	</target>
 	
-	<target name="undeploy" description="Remove web application">
+	<target name="undeploy" description="Poistetaan sovellus tomcat:sta">
 	    <undeploy url="${url}" username="${username}" password="${password}"
 	            path="/timetracker"/>
 	  </target>

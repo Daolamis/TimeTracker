@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -18,4 +17,4 @@
 			olet ollut viimeksi kirjautuneena: <fmt:formatDate value="${applicationScope.loginData.lastlogin}" pattern="dd.MM.yyyy HH:mm"/>
 			<br /><a href="logoutController">[kirjaudu ulos]</a><br/>	
 		</div>
-		<div id="wrapper" class="clearfix">			
+		<div id="wrapper" class="clearfix">

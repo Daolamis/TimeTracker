@@ -75,7 +75,7 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	public Project getProject(Integer id) {
 		Project project = projectDAO.getProject(id);
 		List<Integer> list =  this.hourTypeDAO.getProjectHourTypes(id);		
-		project.setHourtypes(list);
+		project.setHourtypes(new HashSet<Integer>(list));
 		return project;
 	}
 	@Override
@@ -95,17 +95,16 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	@Override
 	public Person savePerson(Person person) {
 		Integer id = this.personDAO.savePerson(person);
-		if(person.getRole() != Person.Role.SUPERUSER && (person.getProjects()
-				!= null && person.getProjects().size()>0)){
+		if(person.getRole() != Person.Role.SUPERUSER){
 			//Liitetaan työntekijä projekteihin			
-			this.projectDAO.joinWorkerToProjects(id, new HashSet(person.getProjects()), null);
+			this.projectDAO.joinWorkerToProjects(id, person.getProjects(), null);
 		}
 		return this.getPerson(id);
 	}
 	@Override
 	public Project saveProject(Project project) {
 		Integer id = this.projectDAO.saveProject(project);		
-		this.hourTypeDAO.joinHourTypesToProject(id, new HashSet<Integer>(project.getHourtypes()));
+		this.hourTypeDAO.joinHourTypesToProject(id, project.getHourtypes());
 		return this.getProject(id);
 	}
 	@Override

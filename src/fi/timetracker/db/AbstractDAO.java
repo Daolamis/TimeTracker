@@ -1,7 +1,5 @@
 package fi.timetracker.db;
 
-import org.springframework.dao.OptimisticLockingFailureException;
-
 import fi.timetracker.entity.Entity;
 
 /** 
@@ -14,7 +12,7 @@ public abstract class AbstractDAO {
 	public void optimisticLockingCheck(Entity entity) {
 		Entity inDb = this.getById(entity.getId());
 		if(inDb.getUpdated().equals(entity.getUpdated()) == false){
-			throw new OptimisticLockingFailureException("Entity: "+entity.getClass()+" id: "+entity.getId()+" was changed");
+			throw new RuntimeException("Entity: "+entity.getClass()+" id: "+entity.getId()+" was changed");
 		}		
 	}
 	

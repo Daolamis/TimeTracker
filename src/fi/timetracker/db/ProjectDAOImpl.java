@@ -119,14 +119,15 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 			}
 		}
 		this.jdbcTemplate.update(unjoin, args.toArray());
-		
-		for(Integer projectId:projectsToJoin){
-			try{
-				this.jdbcTemplate.update(JOIN_WORKER, new Object[] {workerId, projectId});				
-			}catch(Exception e){
-				this.jdbcTemplate.update(REJOIN_WORKER, new Object[] {workerId, projectId});
-			}			
-		}		
+		if(projectsToJoin != null){
+			for(Integer projectId:projectsToJoin){
+				try{
+					this.jdbcTemplate.update(JOIN_WORKER, new Object[] {workerId, projectId});				
+				}catch(Exception e){
+					this.jdbcTemplate.update(REJOIN_WORKER, new Object[] {workerId, projectId});
+				}			
+			}		
+		}
 	}
 
 

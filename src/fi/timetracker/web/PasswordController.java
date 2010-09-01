@@ -1,5 +1,9 @@
 package fi.timetracker.web;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -17,18 +21,19 @@ public class PasswordController extends SimpleFormController{
 	}
 	
 	@Override
-	protected ModelAndView onSubmit(Object command) throws Exception {
-		LoginCommand login = (LoginCommand) command;
+	protected ModelAndView onSubmit(HttpServletRequest request,
+			HttpServletResponse response, Object command, BindException errors) throws Exception {
+		PasswordCommand login = (PasswordCommand) command;
 		Person person = (Person) getServletContext().getAttribute("loginData");
 		boolean ok = this.facade.changePassword(person, login.getOldPassword(), login.getPassword());
-		ModelAndView map = null; 
+		ModelAndView mav = null; 
 		if(ok){
-			map = new ModelAndView("front_page");
-			map.addObject("message", "Salasana on vaihdettu");
+			mav = new ModelAndView(getSuccessView());
+			mav.addObject("message", "Salasana on vaihdettu");
 		}else{
-			map = new ModelAndView(getFormView());
-			map.addObject("message", "Vanha salasana oli väärin, yritä uudestaan");
+			errors.reject("", "Vanha salasana oli virheellinen");			
+			mav = showForm(request, response, errors, null);
 		}
-		return map;
+		return mav;
 	}
 }

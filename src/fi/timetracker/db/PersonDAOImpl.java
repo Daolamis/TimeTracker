@@ -127,7 +127,7 @@ public class PersonDAOImpl extends AbstractDAO implements PersonDAO {
 		public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Person person = new Person(rs.getInt("id"));
 			person.setRoleCode(rs.getString("role"));
-			person.setStatusFromCode(rs.getString("status"));
+			person.setStatusCode(rs.getString("status"));
 			person.setFirstname(rs.getString("firstname"));
 			person.setLastname(rs.getString("lastname"));
 			person.setTitle(rs.getString("title"));

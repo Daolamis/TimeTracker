@@ -1,35 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>SisÃ¤Ã¤n kirjautuminen</title>
+<title>Sisään kirjautuminen</title>
 </head>
 <body>
 <center>
 
-<h2>Projektin tyÃ¶aikaseuranta</h2>
+<h2>Projektin työaikaseuranta</h2>
 <br />
 <form:form method="POST" action="loginController" commandName="login">
+<form:errors path="*">
+	<div class="errors">
+		<p>Syötteessä oli virheitä</p>
+		<c:forEach items="${messages}" var="message">
+			<div class="error">${message}</div>
+		</c:forEach>
+	</div>
+</form:errors>
 <table width="25%" border="1">
 	<tr>
 		<td align="center" bgcolor="lightblue">Kirjaudu</td>
-	</tr>
-	<c:if test="${not empty message}">	
-		<tr>
-			<td align="center" bgcolor="#FF8B8B">
-				<c:out value="${message}" escapeXml="false"/><br/>
-			</td>
-		</tr>	
-	</c:if> 
+	</tr>	
 	<tr>
 		<td>
 		<table border="0" width="100%">
 			<tr>
-				<td width="33%" align="right">KÃ¤yttÃ¤jÃ¤tunnus:</td>
+				<td width="33%" align="right">Käyttäjätunnus:</td>
 				<td width="66%" align="left">
 					<form:input path="userId"/>
 				</td>

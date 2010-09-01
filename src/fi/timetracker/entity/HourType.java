@@ -11,7 +11,7 @@ public class HourType extends Entity{
 	private String branchOfActivity;
 			
 	public HourType(){
-		super(null);
+		this(null);
 	}
 	
 	public HourType(Integer id){
