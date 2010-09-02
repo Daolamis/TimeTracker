@@ -32,7 +32,7 @@ public class LoginController extends SimpleFormController{
 		Person person = facade.login(loginCmd.getUserId(), loginCmd.getPassword());
 		ModelAndView mav = null;		
 		if(person != null){
-			this.getServletContext().setAttribute("loginData", person);
+			request.getSession().setAttribute("loginData", person);
 			mav = new ModelAndView(this.getSuccessView());
 		}else{
 			errors.reject("", "Käyttäjätunnus tai salasana oli virheellinen");
