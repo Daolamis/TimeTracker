@@ -18,7 +18,7 @@ public class LoginValidator implements Validator{
 
 	@Override
 	public void validate(Object obj, Errors err) {
-		ValidationUtils.rejectIfEmpty(err, "userId", "userid.required", "Anna käyttäjätunnus");
-		ValidationUtils.rejectIfEmpty(err, "password", "password.required", "Anna salasana");		
+		ValidationUtils.rejectIfEmpty(err, "userId", "userid.required", "Käyttäjätunnus puuttuu");
+		ValidationUtils.rejectIfEmpty(err, "password", "password.required", "Salasana puuttuu");		
 	}
 }

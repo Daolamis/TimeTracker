@@ -28,13 +28,19 @@
 		</td>		
 	</tr>
 	<tr>
-		<td width="33%" align="right">Nimi:</td>
+		<td width="33%" align="right">
+			<form:errors path="name"><span style="color:red"> *</span></form:errors>
+			Nimi:
+		</td>
 		<td width="66%" align="left">
 			<form:input path="name" size="25"/>
 		</td>
 	</tr>					
 	<tr>
-		<td width="33%" align="right">Kuvaus:</td>
+		<td width="33%" align="right">
+			<form:errors path="description"><span style="color:red"> *</span></form:errors>
+			Kuvaus:
+		</td>
 		<td width="66%" align="left">
 			<form:textarea path="description" rows="5" cols="20"/>
 		</td>

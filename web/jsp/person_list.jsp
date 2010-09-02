@@ -4,7 +4,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div id="maincol">
 	
-<h2>Etsi k√§ytt√§ji√§</h2>
+<h2>Etsi k‰ytt‰ji‰</h2>
 <br />
 <form:form method="POST" action="findPersonsController" commandName="findPersons">
 <table border="0" width="400px">	
@@ -29,7 +29,7 @@
 		</td>
 	</tr>	
 	<tr>
-		<td width="17%" align="right">S√§hk√∂posti:</td>
+		<td width="17%" align="right">S‰hkˆposti:</td>
 		<td width="33%" align="left">
 			<form:input path="email"/>
 		</td>	
@@ -47,8 +47,8 @@
 		<tr>
 			<td bgcolor="#A1A1A1">Etunimi</td>
 			<td bgcolor=#A1A1A1>Sukunimi</td>
-			<td bgcolor="#A1A1A1">S√§hk√∂posti</td>
-			<td bgcolor="#A1A1A1">Ryhm√§</td>
+			<td bgcolor="#A1A1A1">S‰hkˆposti</td>
+			<td bgcolor="#A1A1A1">Ryhm‰</td>
 			<td bgcolor="#A1A1A1">Nimike</td>
 			<td bgcolor="#A1A1A1">Toiminta</td>		
 		</tr>
@@ -66,9 +66,9 @@
 			<td bgcolor="<c:out value="${color}"/>"><c:out value="${person.email}"/></td>
 			<td bgcolor="<c:out value="${color}"/>">
 				<c:choose>
-					<c:when test="${person.roleCode == 'S'}">P√§√§k√§ytt√§j√§</c:when>
+					<c:when test="${person.roleCode == 'S'}">P‰‰k‰ytt‰j‰</c:when>
 					<c:when test="${person.roleCode == 'M'}">Manager</c:when>
-					<c:otherwise>Ty√∂ntekij√§</c:otherwise>			
+					<c:otherwise>Tyˆntekij‰</c:otherwise>			
 				</c:choose>		
 			</td>
 			<td bgcolor="<c:out value="${color}"/>"><c:out value="${person.title}"></c:out> </td>

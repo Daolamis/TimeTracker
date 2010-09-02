@@ -63,11 +63,9 @@
 			<zipfileset dir="web/jsp" prefix="WEB-INF/jsp"/>
 			<zipfileset file="web/jsp/spring-form.tld" prefix="WEB-INF/tld"/>
 			<zipfileset dir="conf" prefix="WEB-INF">
-				<include name="timetracker-servlet.xml"/>
-				<include name="validator-rules.xml"/>
-				<include name="validation.xml"/>
-			</zipfileset>
-			
+				<include name="timetracker-servlet.xml"/>				
+				<include name="message.properties"/>
+			</zipfileset>			
 		</war>
 	</target>
 	

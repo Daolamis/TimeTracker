@@ -9,19 +9,28 @@
 <jsp:include page="message_component.jsp"/>
 <table border="0" width="400px">	
 	<tr>
-		<td width="33%" align="right">Vanha salasana:</td>
+		<td width="33%" align="right">
+			<form:errors path="oldPassword"><span style="color:red"> *</span></form:errors>
+			Vanha salasana:
+		</td>
 		<td width="66%" align="left">
 			<form:password path="oldPassword" size="25"/>
 		</td>
 	</tr>					
 	<tr>
-		<td width="33%" align="right">Uusi salasana:</td>
-			<td width="66%" align="left">
+		<td width="33%" align="right">
+			<form:errors path="password"><span style="color:red"> *</span></form:errors>
+			Uusi salasana:
+		</td>
+		<td width="66%" align="left">
 			<form:password path="password" size="25"/>
 		</td>
 	</tr>	
 	<tr>
-		<td width="33%" align="right">Uusi salasana:</td>
+		<td width="33%" align="right">
+			<form:errors path="retypePassword"><span style="color:red"> *</span></form:errors>
+			Uusi salasana uudestaan:
+		</td>
 		<td width="66%" align="left">
 			<form:password path="retypePassword" size="25"/>
 		</td>		

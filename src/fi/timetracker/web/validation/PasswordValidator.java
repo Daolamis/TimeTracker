@@ -18,14 +18,14 @@ public class PasswordValidator implements Validator{
 	@Override
 	public void validate(Object obj, Errors err) {
 		PasswordCommand command = (PasswordCommand) obj;
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "oldPassword", "", "Anna vanha salasana");		
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "password", "", "Anna uusi salasana");		
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "retypePassword", "", "Anna uusi salasana uudestaan");		
+		ValidationUtils.rejectIfEmptyOrWhitespace(err, "oldPassword", "", "Vanha salasana puuttuu");		
+		ValidationUtils.rejectIfEmptyOrWhitespace(err, "password", "", "Uusi salasana puuttuu");		
+		ValidationUtils.rejectIfEmptyOrWhitespace(err, "retypePassword", "", "Uuden salasana varmistus puuttuu");		
 		if(err.hasErrors() == false){
 			if(command.getPassword().length()<6){
 				err.reject("", "Salasana pituus tulee olla vähintään 6 merkkiä");
 			}else if(command.getPassword().equals(command.getRetypePassword()) == false){
-				err.reject("", "Antamasi uudet salasant eivät olleet samoja");
+				err.reject("", "Antamasi uudet salasanat eivät olleet samoja");
 			}			
 		}
 	}

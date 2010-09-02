@@ -18,28 +18,28 @@ public class HourTypeValidator implements Validator{
 	@Override
 	public void validate(Object obj, Errors err) {
 		HourType command = (HourType) obj;
-		ValidationUtils.rejectIfEmpty(err, "name", "", "Anna nimi");
+		ValidationUtils.rejectIfEmpty(err, "name", "", "Nimi puuttuu");
 		if(err.getFieldErrorCount("name") == 0 && ValidatorUtil.validateMaxLength(command.getName(), 30)){
-			err.reject("", "Nimen maksipituus on 30 merkkiä");
+			err.rejectValue("name", "", "Nimen maksimipituus on 30 merkkiä");
 		}
 		if(err.getFieldErrorCount("name") == 0 && ValidatorUtil.validateMinLength(command.getName(), 4)){
-			err.reject("", "Nimen minimipituus on 4 merkkiä");
+			err.rejectValue("name", "", "Nimen minimipituus on 4 merkkiä");
 		}
 		
-		ValidationUtils.rejectIfEmpty(err, "description", "", "Anna kuvaus");
+		ValidationUtils.rejectIfEmpty(err, "description", "", "Kuvaus puuttuu");
 		if(err.getFieldErrorCount("description") == 0 && ValidatorUtil.validateMaxLength(command.getDescription(), 255)){
-			err.reject("", "Kuvauksen maksipituus on 255 merkkiä");
+			err.rejectValue("description", "", "Kuvauksen maksimipituus on 255 merkkiä");
 		} 
 		if(err.getFieldErrorCount("description") == 0 && ValidatorUtil.validateMinLength(command.getDescription(), 10)){
-			err.reject("", "Kuvauksen minimipituus on 10 merkkiä");
+			err.rejectValue("description", "", "Kuvauksen minimipituus on 10 merkkiä");
 		}
 		
-		ValidationUtils.rejectIfEmpty(err, "branchOfActivity", "", "Anna toimiala");
+		ValidationUtils.rejectIfEmpty(err, "branchOfActivity", "", "Toimiala puuttuu");
 		if(err.getFieldErrorCount("branchOfActivity") == 0 && ValidatorUtil.validateMaxLength(command.getBranchOfActivity(), 30)){
-			err.reject("", "Toimialan maksipituus on 30 merkkiä");
+			err.rejectValue("branchOfActivity", "", "Toimialan maksimipituus on 30 merkkiä");
 		}
 		if(err.getFieldErrorCount("branchOfActivity") == 0 && ValidatorUtil.validateMinLength(command.getBranchOfActivity(), 4)){
-			err.reject("", "Toimialan minimipituus on 4 merkkiä");
+			err.rejectValue("branchOfActivity", "", "Toimialan minimipituus on 4 merkkiä");
 		}
 	}
 }

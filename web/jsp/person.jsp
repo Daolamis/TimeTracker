@@ -22,57 +22,82 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="17%" align="right">Etunimi:</td>
+		<td width="17%" align="right">
+		<form:errors path="firstname"><span style="color:red"> *</span></form:errors>
+		Etunimi:</td>
 		<td width="33%" align="left">
-			<form:input path="firstname"/>
+			<form:input path="firstname"/>			
 		</td>
-		<td width="17%" align="right">Sukunimi:</td>
+		<td width="17%" align="right">
+		<form:errors path="lastname"><span style="color:red"> *</span></form:errors>
+		Sukunimi:</td>
 		<td width="33%" align="left">
-			<form:input path="lastname"/>
+			<form:input path="lastname"/>			
 		</td>
 	</tr>			
 	<tr>
-		<td width="17%" align="right">Tehtävänimike:</td>
+		<td width="17%" align="right">
+		<form:errors path="title"><span style="color:red"> *</span></form:errors>
+		Tehtävänimike:</td>
 		<td width="33%" align="left">
-			<form:input path="title"/>
+			<form:input path="title"/>			
 		</td>
-		<td width="17%" align="right">Sotu:</td>
+		<td width="17%" align="right">
+		<form:errors path="dateOfBirth"><span style="color:red"> *</span></form:errors> 
+		<form:errors path="socialSecuritySuffix"><span style="color:red"> *</span></form:errors>
+		Sotu:</td>
 		<td width="33%" align="left">
-			<form:input path="socialSecuritySuffix"/>
+			<form:input path="dateOfBirth" cssStyle="width:50px;"/> -
+			<form:input path="socialSecuritySuffix" cssStyle="width:30px;"/>			
 		</td>
 	</tr>
 	<tr>
-		<td width="17%" align="right">Sähköposti:</td>
+		<td width="17%" align="right">
+		<form:errors path="email"><span style="color:red"> *</span></form:errors>
+		Sähköposti:</td>
 		<td width="33%" align="left">
-			<form:input path="email"/>
+			<form:input path="email"/>			
 		</td>
-		<td width="17%" align="right">Puhelin:</td>
+		<td width="17%" align="right">
+		<form:errors path="phone"><span style="color:red"> *</span></form:errors>Puhelin:</td>
 		<td width="33%" align="left">
-			<form:input path="phone"/>
+			<form:input path="phone"/>			
 		</td>
 	</tr>
 	<tr>
 		<td align="center" colspan="4" height="10px"/>		 
 	</tr>
 	<tr>
-		<td width="17%" align="right">Osoite:</td>
+		<td width="17%" align="right">
+		<form:errors path="address"><span style="color:red"> *</span></form:errors>
+		Osoite:</td>
 		<td width="33%" align="left">
 			<form:input path="address"/>
+			
 		</td>
-		<td width="17%" align="right">Postinumero:</td>
+		<td width="17%" align="right">
+		<form:errors path="postalcode"><span style="color:red"> *</span></form:errors>
+		Postinumero:</td>
 		<td width="33%" align="left">
-			<form:input path="postalcode"/>
+			<form:input path="postalcode"/>			
 		</td>
 	</tr>
 	<tr>
-		<td width="17%" align="right">Kaupunki:</td>
+		<td width="17%" align="right">
+		<form:errors path="city"><span style="color:red"> *</span></form:errors>
+		Kaupunki:</td>
 		<td width="33%" align="left">
-			<form:input path="city"/>
+			<form:input path="city"/>			
 		</td>
-		<td width="17%" align="right">Maa:</td>
+		<td width="17%" align="right">
+		<form:errors path="country"><span style="color:red"> *</span></form:errors>
+		Maa:</td>
 		<td width="33%" align="left">
 			<form:input path="country"/>
 		</td>
+	</tr>
+	<tr>
+		<td align="center" colspan="4" height="10px"/>		 
 	</tr>
 	<tr>
 		<td width="17" align="right">Tila:</td>
@@ -84,9 +109,9 @@
 	<tr>
 		<td width="17%" align="right">Rooli:</td>
 		<td align="left" colspan="3">
-			<form:radiobutton path="roleCode" value="W"/>TyÃ¶ntekijÃ¤ 
+			<form:radiobutton path="roleCode" value="W"/>Työntekijä 
 			<form:radiobutton path="roleCode" value="M"/>Manager 
-			<form:radiobutton path="roleCode" value="S"/>PÃ¤Ã¤kÃ¤yttÃ¤jÃ¤ 
+			<form:radiobutton path="roleCode" value="S"/>Pääkäyttäjä 
 		</td>		
 	</tr>
 	<tr>

@@ -27,6 +27,10 @@
     	<property name="hourTypeDAO" ref="hourTypeDao"/>
     </bean>
     
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="/WEB-INF/message"/>
+    </bean>
+    
     <bean id="abstractController" abstract="true">
         <property name="facade" ref="databaseFacade"/>                
     </bean>
@@ -52,6 +56,7 @@
     <bean name="personController" class="fi.timetracker.web.PersonController" parent="abstractFormController">    	
     	<property name="commandClass" value="fi.timetracker.entity.Person"/>
     	<property name="commandName" value="person"/>
+    	<property name="validator"><bean class="fi.timetracker.web.validation.PersonValidator"/></property>
     	<property name="formView" value="person"/>
     	<property name="successView" value="front_page"/>
     </bean>

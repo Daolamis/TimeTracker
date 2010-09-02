@@ -1,11 +1,16 @@
 package fi.timetracker.web;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -63,6 +68,14 @@ public class PersonController extends SimpleFormController{
 	protected Map referenceData(HttpServletRequest request) throws Exception {
 		return getReferenceMap();
 	}
+	
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+	    DateFormat df = new SimpleDateFormat("ddMMyy");
+	    df.setLenient(false);
+	    CustomDateEditor editor = new CustomDateEditor(df, true);
+	    binder.registerCustomEditor(Date.class, editor);
+	}
+
 	
 	private Map getReferenceMap(){
 		Map referenceData = new HashMap();
