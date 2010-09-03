@@ -76,6 +76,9 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 		Project project = projectDAO.getProject(id);
 		List<Integer> list =  this.hourTypeDAO.getProjectHourTypes(id);		
 		project.setHourtypes(new HashSet<Integer>(list));
+		HashSet<Integer> projectId = new HashSet<Integer>();
+		projectId.add(project.getId());
+		project.setWorkers(this.findPersons("", "", "", projectId));
 		return project;
 	}
 	@Override
@@ -85,7 +88,12 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	
 	@Override
 	public Person login(String userid, String password) {
-		return this.passwordDAO.login(userid, password);
+		Person person = null;
+		Integer id = this.passwordDAO.login(userid, password);
+		if(id != null){
+			person = this.getPerson(id);
+		}
+		return person;
 	}
 	@Override
 	public HourType saveHourType(HourType hourType) {		
@@ -108,9 +116,16 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 		return this.getProject(id);
 	}
 	@Override
-	public void joinWorkerToProject(Integer workerId, Set<Integer> projects,
-			Set<Integer> focusProjects) {
-		this.projectDAO.joinWorkerToProjects(workerId, projects, focusProjects);		
+	public boolean isEmailFree(Integer personId, String email){
+		List<Person> persons = this.findPersons("", "", email, null);
+		if(persons.size() == 0){
+			return true;
+		}else if(personId == null){
+			return false;
+		}else{
+			Person person = persons.get(0);
+			return person.getId() == personId;
+		}
 	}
 	@Override
 	public boolean changePassword(Person person, String oldPassword,
@@ -118,7 +133,7 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 		return this.passwordDAO.changePassword(person, oldPassword, newPassword);		
 	}
 	@Override
-	public String generatePassword(Person person) {
-		return this.passwordDAO.generatePassword(person);
+	public String generatePassword(Integer id) {
+		return this.passwordDAO.generatePassword(id);
 	}	
 }

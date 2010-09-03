@@ -9,9 +9,9 @@ import fi.timetracker.entity.Person;
  */
 public interface PasswordDAO {
 	
-	public Person login(String login, String password);
+	public Integer login(String login, String password);
 	
 	public boolean changePassword(Person person, String oldPassword, String newPassword);
 	
-	public String generatePassword(Person person);
+	public String generatePassword(Integer id);
 }

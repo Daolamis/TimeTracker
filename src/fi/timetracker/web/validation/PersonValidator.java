@@ -76,7 +76,7 @@ public class PersonValidator  implements Validator{
 		
 		ValidationUtils.rejectIfEmpty(err, "email", "", "Sähköposti puuttuu");		
 		if(err.getFieldErrorCount("email") == 0){
-			if(command.getEmail().matches("^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$") == false){
+			if(command.getEmail().toUpperCase().matches("^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$") == false){
 				err.rejectValue("email", "", "Sähköposti on virheellinen");
 			}
 		}
@@ -91,9 +91,9 @@ public class PersonValidator  implements Validator{
 		
 		if(command.getRole() != Person.Role.SUPERUSER){
 			ValidationUtils.rejectIfEmpty(err, "socialSecuritySuffix", "", "Sotun loppuosa puuttuu");
-			if(command.getDateOfBirth() == null){
+			if(err.getFieldErrorCount("dateOfBirth") == 0 && command.getDateOfBirth() == null){
 				err.rejectValue("dateOfBirth", "", "Sotun alkuosa puuttuu");
 			}			
 		}	
-	}
+	} 
 }

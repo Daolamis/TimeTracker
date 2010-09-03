@@ -32,9 +32,9 @@ public interface DatabaseFacade {
 	
 	public List<HourType> getAllHourTypes();
 	
-	public void joinWorkerToProject(Integer workerId, Set<Integer> projects, Set<Integer> focusProjects);
+	public boolean isEmailFree(Integer workerId, String email);
 	
 	public boolean changePassword(Person person, String oldPassword, String newPassword);
 	
-	public String generatePassword(Person person);
+	public String generatePassword(Integer id);
 }

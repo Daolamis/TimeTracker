@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="header.jsp"></jsp:include>
 <div id="maincol">
-<p>Etusivu</p>
+<p>
+<c:if test="${not empty message}">
+	<div class="message">
+		<c:out value="${message}" escapeXml="false"/><br/>
+	</div>
+</c:if> 
+</p>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>

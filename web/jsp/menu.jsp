@@ -3,6 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<c:if test="${sessionScope.loginData.roleCode == 'M'}">
+	<a href="personTaskController?method=listPersons">Työntekijät</a><br/>	
+</c:if>
 <c:if test="${sessionScope.loginData.roleCode != 'S'}">
 	<a href="timetrackController">Tuntikirjanpito</a><br/>
 </c:if>

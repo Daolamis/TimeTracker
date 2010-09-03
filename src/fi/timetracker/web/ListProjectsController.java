@@ -25,8 +25,8 @@ public class ListProjectsController extends AbstractController {
 	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
 		List<Project> projects = facade.getAllProjects(false);
-		ModelAndView map = new ModelAndView("project_list");
-		map.addObject("projects", projects);
-		return map;
+		ModelAndView mav = new ModelAndView("project_list");
+		mav.addObject("projects", projects);
+		return mav;
 	}
 }

@@ -30,7 +30,8 @@ public class SessionInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res,
 			Object handler) throws Exception {		
 		if(handler instanceof LoginController){
-			return true;
+			// kun ollaan menossa logincontrol:lle niin session tarkastamista ei tehdä
+			return true; 
 		}
 		
 		HttpSession session = req.getSession(false);

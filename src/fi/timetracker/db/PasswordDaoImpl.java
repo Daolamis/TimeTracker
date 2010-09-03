@@ -10,7 +10,6 @@ import javax.sql.DataSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import fi.timetracker.db.PersonDAOImpl.PersonRowMapper;
 import fi.timetracker.entity.Person;
 
 /** 
@@ -18,8 +17,8 @@ import fi.timetracker.entity.Person;
  */
 public class PasswordDaoImpl implements PasswordDAO {
 
-	private static final String GET_PERSON = "SELECT * FROM person WHERE "
-			+ "email = ? AND password = ?";
+	private static final String GET_PERSON = "SELECT id FROM person WHERE "
+			+ "email = ? AND password = ? AND status = 'A'";
 	
 	private static final String UPDATE_PASSWORD = "UPDATE person SET password = ?" +
 			" WHERE id = ?";
@@ -33,25 +32,25 @@ public class PasswordDaoImpl implements PasswordDAO {
 	}
 
 	@Override
-	public Person login(String login, String password) {
+	public Integer login(String login, String password) {
 		String hash = hashPassword(password);
-		Person person = null;
-		try{
-			person = (Person) this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{login, hash}, new PersonRowMapper());
-			this.jdbcTemplate.update(UPDATE_LASTLOGIN, new Object[]{new Date(), person.getId()});
+		Integer id = null;
+		try{			
+			id = (Integer) this.jdbcTemplate.queryForObject(GET_PERSON, new Object[]{login, hash}, Integer.class);			
+			this.jdbcTemplate.update(UPDATE_LASTLOGIN, new Object[]{new Date(), id});
 		} catch(EmptyResultDataAccessException erdae){
 			// Salasana tai käyttäjätunnus oli väärin,
 			//joten ei tehda mitään, annetaan NULLin palautua
-		}
-		return person;
+		}		
+		return id;
 	}
 
 	@Override
 	public boolean changePassword(Person person, String oldPassword,
 			String newPassword) {
-		Person check = null;
+		Integer check = null;
 		check = this.login(person.getEmail(), oldPassword);		
-		if(check != null && (check.getId().equals(person.getId()))){
+		if(check != null && (check.equals(person.getId()))){
 			newPassword = hashPassword(newPassword);
 			this.changePassword(person.getId(), newPassword);
 			return true;
@@ -60,11 +59,11 @@ public class PasswordDaoImpl implements PasswordDAO {
 	}
 
 	@Override
-	public String generatePassword(Person person) {
+	public String generatePassword(Integer id) {
 		String password = hashPassword(""+System.currentTimeMillis());
-		password = password.substring(0, 8);
+		password = password.substring(0, 6);
 		String hash = hashPassword(password);
-		this.changePassword(person.getId(), hash);
+		this.changePassword(id, hash);
 		return password;
 	}
 	

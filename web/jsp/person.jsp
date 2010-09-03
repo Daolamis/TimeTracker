@@ -8,9 +8,12 @@
 	<c:otherwise><h2>Muokkaa k‰ytt‰j‰‰</h2></c:otherwise>
 </c:choose>
 <br />
+<c:if test="${not empty person.id}">
+<a href="personTaskController?method=generateNewPassword&id=<c:out value="${person.id}"/>">[Generoi uusi salasana]</a>
+</c:if>
 <form:form method="POST" action="personController" commandName="person">
 <jsp:include page="message_component.jsp"/>
-<table border="0" width="400px">
+<table border="0" width="500px">
 	<tr>
 		<td width="33%" align="right">ID:</td>
 		<td align="left">

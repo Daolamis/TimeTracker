@@ -49,9 +49,10 @@
     <bean name="findPersonsController" class="fi.timetracker.web.FindPersonsController" parent="abstractFormController">
        	<property name="commandClass" value="fi.timetracker.web.FindPersonsCommand"/>
        	<property name="commandName" value="findPersons"/>
-    	<property name="formView" value="person_list"/>
-    	<property name="successView" value="person_list"/>
+    	<property name="formView" value="find_persons"/>
+    	<property name="successView" value="find_persons"/>
     </bean>
+    
     
     <bean name="personController" class="fi.timetracker.web.PersonController" parent="abstractFormController">    	
     	<property name="commandClass" value="fi.timetracker.entity.Person"/>
@@ -87,12 +88,19 @@
     	<property name="successView" value="front_page"/>
     </bean>
     
+    
     <bean name="listHourTypesController" class="fi.timetracker.web.ListHourTypesController" parent="abstractController"/>
     <bean name="listProjectsController" class="fi.timetracker.web.ListProjectsController" parent="abstractController"/>        
     <bean name="logoutController" class="fi.timetracker.web.LogoutController"/>
     
+    <bean id="paramResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+  		<property name="paramName"><value>method</value></property>
+	</bean>
+    <bean name="personTaskController" class="fi.timetracker.web.PersonTaskController" parent="abstractController">
+    	 <property name="methodNameResolver"><ref bean="paramResolver"/></property>
+    </bean>
+    
     <bean id="sessionInterceptor" class="fi.timetracker.web.SessionInterceptor"/>
-        
     
     <bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 	   <property name="interceptors">
@@ -104,8 +112,9 @@
 	   <property name="mappings">	   
 		<props>
 		   <prop key="loginController">loginController</prop>
-		   <prop key="personController">personController</prop>
-		   <prop key="findPersonsController">findPersonsController</prop>		   
+		   <prop key="personController">personController</prop>		   
+		   <prop key="findPersonsController">findPersonsController</prop>
+		   <prop key="personTaskController">personTaskController</prop>		   
 		   <prop key="projectController">projectController</prop>
 		   <prop key="listProjectsController">listProjectsController</prop>
 		   <prop key="hourTypeController">hourTypeController</prop>

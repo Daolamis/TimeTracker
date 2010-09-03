@@ -4,8 +4,44 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div id="maincol">
 	
-<h2>Käyttäjät</h2>
+<h2>Etsi käyttäjiä</h2>
 <br />
+<form:form method="POST" action="findPersonsController" commandName="findPersons">
+<table border="0" width="400px">	
+	<tr>
+		<td width="17%" align="right">Etunimi:</td>
+		<td width="33%" align="left">
+			<form:input path="firstname"/>
+		</td>
+		<td rowspan="3" width="33%" align="left">
+			<fieldset>
+			<legend>Projektit </legend>
+			<form:select path="projects" multiple="true">						
+				<form:options items="${allProjects}"  />
+			</form:select>
+		</fieldset>
+		</td>
+	</tr>
+	<tr>
+		<td width="17%" align="right">Sukunimi:</td>
+		<td width="33%" align="left">
+			<form:input path="lastname"/>
+		</td>
+	</tr>	
+	<tr>
+		<td width="17%" align="right">Sähköposti:</td>
+		<td width="33%" align="left">
+			<form:input path="email"/>
+		</td>	
+	</tr>			
+	<tr>
+		<td align="center" colspan="4">
+			<input type="submit" alignment="center" value="Etsi"> 
+		</td>
+	</tr>	
+</table>		
+</form:form>
+
 <c:if test="${not empty persons}">
 	<table border="0" cellpadding="0" cellspacing="0" width="500px">
 		<tr>
@@ -36,7 +72,7 @@
 				</c:choose>		
 			</td>
 			<td bgcolor="<c:out value="${color}"/>"><c:out value="${person.title}"></c:out> </td>
-			<td bgcolor="<c:out value="${color}"/>"><a href="personTaskController?method=showPerson&id=<c:out value="${person.id}"/>">[tiedot]</a></td>		
+			<td bgcolor="<c:out value="${color}"/>"><a href="personController?id=<c:out value="${person.id}"/>">[muokkaa]</a></td>		
 		</tr>	
 		</c:forEach>	
 	</table>

@@ -13,8 +13,8 @@
 <body>
 	<div id="pagewidth">
 		<div id="header">
-			Tervetuloa ${applicationScope.loginData.firstname} ${applicationScope.loginData.lastname}, 
-			olet ollut viimeksi kirjautuneena: <fmt:formatDate value="${applicationScope.loginData.lastlogin}" pattern="dd.MM.yyyy HH:mm"/>
+			Tervetuloa ${sessionScope.loginData.firstname} ${sessionScope.loginData.lastname}, 
+			olet ollut viimeksi kirjautuneena: <fmt:formatDate value="${sessionScope.loginData.lastlogin}" pattern="dd.MM.yyyy HH:mm"/>
 			<br /><a href="logoutController">[kirjaudu ulos]</a><br/>	
 		</div>
 		<div id="wrapper" class="clearfix">
