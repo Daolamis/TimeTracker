@@ -1,137 +1,80 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <jsp:include page="header.jsp"></jsp:include>
 <div id="maincol">
-<h2>Tuntikirjaus</h2>
-<table border="1">
-<tr><td>
-<table border="0"  cellpadding="0"  cellspacing="0" width="500px">
-	<tr>
-		<td width="25%" align="left"><a href="#">[edellinen]</a><br/></td>
-		<td align="center" colspan="4">
-			<h1>Viikko 31</h1>
-		</td>
-		<td align="right"><a href="#">[seuraava]</a><br/></td>
-	</tr>
-	<tr>
-		<td colspan="6" height="2" bgcolor="gray"></td>
-	</tr>
-	<tr>
-		<td align="center">Projekti</td>
-		<td align="center">Maanantai</td>
-		<td align="center">Tiistai</td>
-		<td align="center">Keskiviikko</td>
-		<td align="center">Torstai</td>
-		<td align="center">Perjantai</td>
-	</tr>
-	<tr>
-		<td colspan="6" height="1" bgcolor="gray"></td>
-	</tr>			
-	<tr>
-		<td>Yleinen</td>
-		<td colspan="5">&nbsp;</td>
-	</tr>
-	<tr>
-		<td>&nbsp; Sairausloma</td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td>&nbsp; Loma</td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td>&nbsp; Koulutus</td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td colspan="6" height="1" bgcolor="gray"></td>
-	</tr>
-	<tr>
-		<td>WebFox2.0</td>
-		<td colspan="5">&nbsp;</td>
-	</tr>
-	<tr>
-		<td>&nbsp; Suunnittelu</td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td>&nbsp; Kehitys</td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td>&nbsp; Testaus</td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td colspan="6" height="1" bgcolor="gray"></td>
-	</tr>
-	<tr>
-		<td>Tsoha</td>
-		<td colspan="5">&nbsp;</td>
-	</tr>
-	<tr>
-		<td>&nbsp; Suunnittelu</td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td>&nbsp; Kehitys</td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text" value="2"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td>&nbsp; Testaus</td>
-		<td><input type="text" value="4"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-		<td><input type="text"/></td>
-	</tr>
-	<tr>
-		<td colspan="6" height="1" bgcolor="gray"></td>
-	</tr>
-	<tr>
-		<td>YhteensÃ¤</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-</table>
-</td>
-</tr>	
-</table>
+<form:form method="POST" action="timetrackController" commandName="workhour">
+<jsp:include page="message_component.jsp"/>
+<fieldset>
+	<legend>Lisää työtunti</legend>
+	<table border="0" width="400px">	
+		<tr>
+			<td>			
+				<form:select path="projectId" multiple="false">						
+					<form:option value="-">Projekti</form:option>
+					<c:forEach items="${sessionScope.loginData.projects}" var="projectId">
+						<c:set var="project" value="${projects[projectId]}"/>
+						<form:option value="${projectId}">${project.name}</form:option>
+					</c:forEach>
+				</form:select>
+			</td>		
+			<td>
+				<form:select path="hourTypeId" multiple="false">						
+					<form:option value="-">Tuntityyppi</form:option>
+					<c:forEach items="${hourTypes}" var="mapEntry">
+						<form:option value="${mapEntry.key}">${mapEntry.value.name}</form:option>
+					</c:forEach>
+				</form:select>
+			</td>
+			<td>			
+				<form:input path="workDate"/>
+			</td>
+		
+			<td>			
+				<form:input path="amount"/>
+			</td>				
+		
+			<td>
+				<input type="submit" value="Lisää tunti"> 
+			</td>
+		</tr>
+	</table>
+</fieldset>		
+</form:form>
+<br />	
+<h2>Työtunnit</h2>
+
+<c:if test="${not empty workHours}">
+	<table border="0" cellpadding="0" cellspacing="0" width="500px">
+		<tr>
+			<td bgcolor="#A1A1A1">Pvm</td>
+			<td bgcolor=#A1A1A1>Projekti</td>		
+			<td bgcolor="#A1A1A1">Tuntityyppi</td>		
+			<td bgcolor="#A1A1A1">Ylityö</td>
+			<td bgcolor=#A1A1A1>Määrä</td>		
+			<td bgcolor="#A1A1A1">Toiminta</td>
+		</tr>
+		<c:forEach items="${workHours}" var="workhour" varStatus="status">
+			<c:set var="color" value="#E6ECFF" />	
+	          <c:if test="${status.count%2==0}">
+	            <c:set var="color" value="#CDCDCD" />
+	          </c:if>
+	    <tr>
+	    	<td colspan="6" height="2" bgcolor="GRAY"/>
+	    </tr>
+		<tr>
+			<td bgcolor="${color}"><fmt:formatDate value="${workhour.workDate}" pattern="dd.MM.yyyy"/></td>		
+			<td bgcolor="${color}">${projects[workhour.projectId].name}</td>				
+			<td bgcolor="${color}">${hourTypes[workhour.hourTypeId].name}</td>
+			<td bgcolor="${color}">${workhour.overtime}</td>
+			<td bgcolor="${color}">${workhour.amount}</td>
+			<td bgcolor="${color}"><a href="#">[poista]</a></td>		
+		</tr>	
+		</c:forEach>	
+	</table>
+</c:if>
+<br/>
+<br/>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>

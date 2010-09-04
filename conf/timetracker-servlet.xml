@@ -4,12 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
-    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		 <property name="driverClassName" value="org.postgresql.Driver" />
-		 <property name="url" value="jdbc:postgresql://localhost/timetracker" />
-		 <property name="username" value="postgres" />
-		 <property name="password" value="lumituhka" />
- 	</bean>   
+  
 	
     <bean id="abstractDao" abstract="true">
         <property name="dataSource" ref="datasource"/>
@@ -18,13 +13,14 @@
     <bean id="projectDao" class="fi.timetracker.db.ProjectDAOImpl" parent="abstractDao"/>        
     <bean id="passwordDao" class="fi.timetracker.db.PasswordDaoImpl" parent="abstractDao"/>
     <bean id="hourTypeDao" class="fi.timetracker.db.HourTypeDAOImpl" parent="abstractDao"/>
-    <bean id="workHourType" class="fi.timetracker.db.WorkHourDAOImpl" parent="abstractDao"/>
+    <bean id="workHourDao" class="fi.timetracker.db.WorkHourDAOImpl" parent="abstractDao"/>
     
     <bean id="databaseFacade" class="fi.timetracker.db.DatabaseFacadeImpl">
     	<property name="projectDAO" ref="projectDao"/>
     	<property name="personDAO" ref="personDao"/>
     	<property name="passwordDAO" ref="passwordDao"/>
     	<property name="hourTypeDAO" ref="hourTypeDao"/>
+    	<property name="workHourDAO" ref="workHourDao"/>
     </bean>
     
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -70,8 +66,6 @@
     	<property name="successView" value="front_page"/>
     </bean>
     
-    <bean name="timetrackController" class="fi.timetracker.web.TimetrackController" parent="abstractController"/>
-    
     <bean name="projectController" class="fi.timetracker.web.ProjectController" parent="abstractFormController">
     	<property name="commandClass" value="fi.timetracker.entity.Project"/>
     	<property name="commandName" value="project"/>
@@ -86,6 +80,12 @@
     	<property name="validator"><bean class="fi.timetracker.web.validation.HourTypeValidator"/></property>
     	<property name="formView" value="hourtype"/>
     	<property name="successView" value="front_page"/>
+    </bean>
+    
+    <bean name="timetrackController" class="fi.timetracker.web.TimetrackController" parent="abstractFormController">    	
+    	<property name="commandClass" value="fi.timetracker.entity.WorkHour"/>
+    	<property name="commandName" value="workhour"/>    	
+    	<property name="formView" value="timetrack"/>    	
     </bean>
     
     

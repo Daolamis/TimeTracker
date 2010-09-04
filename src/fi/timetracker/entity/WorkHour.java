@@ -13,7 +13,7 @@ public class WorkHour extends Entity{
 	
 	private boolean overtime;
 	private Date workDate;
-	private double amount;
+	private String amount;
 	
 	public WorkHour(){
 		super(null);
@@ -23,7 +23,7 @@ public class WorkHour extends Entity{
 		super(id);
 	}		
 	
-	public boolean isOvertime() {
+	public boolean getOvertime() {
 		return overtime;
 	}
 	public void setOvertime(boolean overtime) {
@@ -35,10 +35,10 @@ public class WorkHour extends Entity{
 	public void setWorkDate(Date workDate) {
 		this.workDate = workDate;
 	}
-	public double getAmount() {
+	public String getAmount() {
 		return amount;
 	}
-	public void setAmount(double amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 

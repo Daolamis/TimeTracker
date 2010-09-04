@@ -7,6 +7,7 @@ import java.util.Set;
 import fi.timetracker.entity.HourType;
 import fi.timetracker.entity.Person;
 import fi.timetracker.entity.Project;
+import fi.timetracker.entity.WorkHour;
 /** 
  * @author Petteri Parviainen
  */
@@ -30,8 +31,10 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	public void setProjectDAO(ProjectDAO projectDAO) {
 		this.projectDAO = projectDAO;
 	}
-
 	
+	public void setWorkHourDAO(WorkHourDAO workHourDAO) {
+		this.workHourDAO = workHourDAO;
+	}
 	@Override
 	public List<Person> findPersons(String firstname, String lastname,
 			String email, Set<Integer> projects) {
@@ -135,5 +138,18 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	@Override
 	public String generatePassword(Integer id) {
 		return this.passwordDAO.generatePassword(id);
+	}
+	@Override
+	public void deleteWorkHour(Integer workHourId) {
+		this.workHourDAO.deleteWorkHour(workHourId);
+		
+	}
+	@Override
+	public List<WorkHour> getWorkHours(Integer workerId) {		
+		return this.workHourDAO.getWorkHours(workerId);
+	}
+	@Override
+	public void saveWorkHour(WorkHour hour) {
+		this.workHourDAO.saveWorkHour(hour);		
 	}	
 }

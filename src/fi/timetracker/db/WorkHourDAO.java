@@ -1,9 +1,7 @@
 package fi.timetracker.db;
 
-import java.util.Date;
 import java.util.List;
 
-import fi.timetracker.entity.Person;
 import fi.timetracker.entity.WorkHour;
 
 /**
@@ -13,12 +11,9 @@ import fi.timetracker.entity.WorkHour;
  */
 public interface WorkHourDAO {
 	
-	public List<WorkHour> getWorkHours(Date start, Date end, Person person);
+	public List<WorkHour> getWorkHours(Integer workerId);
 	
-	public boolean saveWorkHour(WorkHour workhours);
+	public void saveWorkHour(WorkHour hour);
 	
-	public boolean deleteWorkHour(WorkHour workhours);
-	
-	public WorkHour getWorkHour(int id);
-
+	public void deleteWorkHour(Integer workHourId);
 }

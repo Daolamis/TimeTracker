@@ -9,8 +9,7 @@
 </c:if> 
 
 <form:errors path="*">
-	<div class="errors">
-		<p>Syötteessä oli virheitä</p>
+	<div class="errors">		
 		<c:forEach items="${messages}" var="message">
 			<div class="error">${message}</div>
 		</c:forEach>
