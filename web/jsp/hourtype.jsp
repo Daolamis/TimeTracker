@@ -11,7 +11,7 @@
 <br />
 <form:form method="POST" action="hourTypeController" commandName="hourtype">
 <jsp:include page="message_component.jsp"/>
-<table border="0" width="400px">
+<table border="0" width="500px">
 	<tr>
 		<td width="33%" align="right">ID:</td>
 		<td width="67%" align="left">

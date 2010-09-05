@@ -3,18 +3,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<ul>
 <c:if test="${sessionScope.loginData.roleCode == 'M'}">
-	<a href="personTaskController?method=listPersons">Työntekijät</a><br/>	<%--Managerin linkit --%>
+	<li><a href="personTaskController?method=listPersons">Työntekijät</a></li>	<%--Managerin linkit --%>
 </c:if>
 <c:if test="${sessionScope.loginData.roleCode != 'S'}">
-	<a href="timetrackController">Tuntikirjanpito</a><br/><%--Muiden kuin pääkäyttäjän linkit --%>
+	<li><a href="timetrackController">Tuntikirjanpito</a></li><%--Muiden kuin pääkäyttäjän linkit --%>
 </c:if>
 <c:if test="${sessionScope.loginData.roleCode == 'S'}"> <%--Pääkäyttäjän linkit --%>
-	<a href="personController">Lisää uusi käyttäjä</a><br/>
-	<a href="findPersonsController">Etsi käyttäjiä</a><br/>
-	<a href="projectController">Lisää projekti</a><br/>
-	<a href="listProjectsController">Listaa projektit</a><br/>
-	<a href="hourTypeController">Lisää tuntityyppi</a><br/>
-	<a href="listHourTypesController">Listaa tuntityypit</a><br/>
+	<li><a href="personController">Lisää uusi käyttäjä</a></li>
+	<li><a href="findPersonsController">Etsi käyttäjiä</a></li>
+	<li><a href="projectController">Lisää projekti</a></li>
+	<li><a href="listProjectsController">Listaa projektit</a></li>
+	<li><a href="hourTypeController">Lisää tuntityyppi</a></li>
+	<li><a href="listHourTypesController">Listaa tuntityypit</a></li>
 </c:if>
-<a href="passwordController">Vaihda salasana</a><br/>
+<li><a href="passwordController">Vaihda salasana</a></li>
+</ul>

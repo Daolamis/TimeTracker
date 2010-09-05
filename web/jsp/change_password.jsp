@@ -7,7 +7,7 @@
 <br />
 <form:form method="POST" action="passwordController" commandName="passwordCommand">
 <jsp:include page="message_component.jsp"/>
-<table border="0" width="400px">	
+<table border="0" width="500px">	
 	<tr>
 		<td width="33%" align="right">
 			<form:errors path="oldPassword"><span style="color:red"> *</span></form:errors>

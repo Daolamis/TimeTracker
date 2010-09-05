@@ -5,6 +5,13 @@
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
   
+	 
+    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		 <property name="driverClassName" value="org.postgresql.Driver" />
+		 <property name="url" value="jdbc:postgresql://localhost/timetracker" />
+		 <property name="username" value="???" />
+		 <property name="password" value="???" />
+ 	</bean>   
 	
     <bean id="abstractDao" abstract="true">
         <property name="dataSource" ref="datasource"/>
@@ -55,7 +62,7 @@
     	<property name="commandName" value="person"/>
     	<property name="validator"><bean class="fi.timetracker.web.validation.PersonValidator"/></property>
     	<property name="formView" value="person"/>
-    	<property name="successView" value="front_page"/>
+    	<property name="successView" value="person"/>
     </bean>
     
     <bean name="passwordController" class="fi.timetracker.web.PasswordController" parent="abstractFormController">    	
@@ -71,7 +78,7 @@
     	<property name="commandName" value="project"/>
     	<property name="validator"><bean class="fi.timetracker.web.validation.ProjectValidator"/></property>
     	<property name="formView" value="project"/>
-    	<property name="successView" value="front_page"/>
+    	<property name="successView" value="project"/>
     </bean>
     
     <bean name="hourTypeController" class="fi.timetracker.web.HourTypeController" parent="abstractFormController">    	
@@ -79,7 +86,7 @@
     	<property name="commandName" value="hourtype"/>
     	<property name="validator"><bean class="fi.timetracker.web.validation.HourTypeValidator"/></property>
     	<property name="formView" value="hourtype"/>
-    	<property name="successView" value="front_page"/>
+    	<property name="successView" value="hourtype"/>
     </bean>
     
     <bean name="timetrackController" class="fi.timetracker.web.TimetrackController" parent="abstractFormController">    	

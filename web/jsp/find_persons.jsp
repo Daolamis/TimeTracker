@@ -7,7 +7,7 @@
 <h2>Etsi käyttäjiä</h2>
 <br />
 <form:form method="POST" action="findPersonsController" commandName="findPersons">
-<table border="0" width="400px">	
+<table border="0" width="500px">	
 	<tr>
 		<td width="17%" align="right">Etunimi:</td>
 		<td width="33%" align="left">

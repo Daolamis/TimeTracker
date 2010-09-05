@@ -39,8 +39,9 @@ public class TimetrackController extends SimpleFormController{
 			throws Exception {
 		WorkHour hour = (WorkHour) command;
 		
-		//koska vain yksi kenttä pitää validoita, tehdään se poikkeuksellisesti
-		//controllerissa
+		//koska vain kaksi kenttää pitää validoita, 
+		//tehdään se poikkeuksellisesti controllerissa
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "workDate", "","Pvm puuttuu");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "amount", "","Tuntimäärä puuttuu");
 		if(errors.getFieldErrorCount("amount")==0){
 			try{

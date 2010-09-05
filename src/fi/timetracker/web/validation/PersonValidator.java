@@ -91,6 +91,10 @@ public class PersonValidator  implements Validator{
 		
 		if(command.getRole() != Person.Role.SUPERUSER){
 			ValidationUtils.rejectIfEmpty(err, "socialSecuritySuffix", "", "Sotun loppuosa puuttuu");
+			if(err.getFieldErrorCount("socialSecuritySuffix") == 0 && ValidatorUtil.validateExactLength(command.getSocialSecuritySuffix(), 4)){
+				err.rejectValue("socialSecuritySuffix", "", "Sotun loppuosan pituus on 4 merkkiä");
+			}
+			
 			if(err.getFieldErrorCount("dateOfBirth") == 0 && command.getDateOfBirth() == null){
 				err.rejectValue("dateOfBirth", "", "Sotun alkuosa puuttuu");
 			}			

@@ -7,19 +7,10 @@
 	<c:when test="${empty project.id}"><h2>Lis‰‰ uusi projekti</h2></c:when>
 	<c:otherwise><h2>Muokkaa projektia</h2></c:otherwise>
 </c:choose>
-<c:if test="${not empty message}">
-	<table width="400px">
-		<tr>
-			<td align="center" bgcolor="#BBFFAE">
-				<c:out value="${message}" escapeXml="false"/><br/>
-			</td>
-		</tr>
-	</table>
-</c:if> 
 <br />
 <form:form method="POST" action="projectController" commandName="project">
 <jsp:include page="message_component.jsp"/>
-<table border="0" width="400px">
+<table border="0" width="500px">
 	<tr>
 		<td width="33%" align="right">ID:</td>
 		<td width="67%" align="left">
