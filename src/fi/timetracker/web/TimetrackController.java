@@ -1,5 +1,6 @@
 package fi.timetracker.web;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.validation.BindException;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
@@ -36,8 +38,31 @@ public class TimetrackController extends SimpleFormController{
 			HttpServletResponse response, Object command, BindException errors)
 			throws Exception {
 		WorkHour hour = (WorkHour) command;
-		this.facade.saveWorkHour(hour);
-		return showForm(request, response, errors);
+		
+		//koska vain yksi kenttä pitää validoita, tehdään se poikkeuksellisesti
+		//controllerissa
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "amount", "","Tuntimäärä puuttuu");
+		if(errors.getFieldErrorCount("amount")==0){
+			try{
+				new BigDecimal(hour.getAmount());			
+			}catch(NumberFormatException e){
+				errors.rejectValue("amount", "", "Tuntimäärän pitää olla numeerinen");
+			}
+		}		
+		if(errors.hasErrors()){
+			//Syötteessä virheitä
+			return showForm(request, response, errors); 
+		}
+		
+		this.facade.saveWorkHour(hour);		
+		//tyhjennetaan lomake
+		hour.setProjectId(null);
+		hour.setHourTypeId(null);
+		hour.setWorkDate(null);
+		hour.setAmount(null);		
+		ModelAndView mav = showForm(request, response, errors); 
+		mav.addObject("message", "Tunti on kirjattu");
+		return mav;		
 	}
 	
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
@@ -61,16 +86,16 @@ public class TimetrackController extends SimpleFormController{
 	protected Map referenceData(HttpServletRequest request) throws Exception {
 		Person login = (Person) request.getSession(false).getAttribute("loginData");
 		Map referenceData = new HashMap();
-		Map hourTypes = this.convertToMap(facade.getAllHourTypes());
+		Map hourTypes = convertToMap(facade.getAllHourTypes());
 		referenceData.put("hourTypes", hourTypes);
-		Map projects = this.convertToMap(facade.getAllProjects(false));
+		Map projects = convertToMap(facade.getAllProjects(false));
 		referenceData.put("projects", projects);
 		List<WorkHour> workHours = facade.getWorkHours(login.getId());
 		referenceData.put("workHours", workHours);
 		return referenceData;
 	}
 	
-	private Map<Integer, Entity> convertToMap(List<? extends Entity> list){
+	public static Map<Integer, Entity> convertToMap(List<? extends Entity> list){
 		Map<Integer, Entity> map = new HashMap<Integer, Entity>();
 		for(Entity e:list){
 			map.put(e.getId(), e);

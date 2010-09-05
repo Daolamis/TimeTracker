@@ -65,4 +65,24 @@ public class WorkHour extends Entity{
 	public void setHourTypeId(Integer hourTypeId) {
 		this.hourTypeId = hourTypeId;
 	}
+	
+	//Huoma tämä metodi on jsp-sivua varten
+	public String getProjectAndHourType(){
+		String reply = "";
+		if(projectId != null && hourTypeId != null){
+			reply = ""+projectId+"_"+hourTypeId;
+		}		
+		return reply;
+	}
+
+	//Huoma tämä metodi on jsp-sivua varten
+	public void setProjectAndHourType(String value){
+		if(value!= null){
+			String[] split = value.split("_");
+			if(split.length == 2){
+				this.projectId = new Integer(split[0]);
+				this.hourTypeId = new Integer(split[1]);
+			}
+		}
+	}
 }

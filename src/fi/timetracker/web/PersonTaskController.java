@@ -1,6 +1,7 @@
 package fi.timetracker.web;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import fi.timetracker.db.DatabaseFacade;
 import fi.timetracker.entity.Person;
+import fi.timetracker.entity.WorkHour;
 /** 
  * @author Petteri Parviainen
  */
@@ -26,8 +28,17 @@ public class PersonTaskController extends MultiActionController{
 			HttpServletResponse res) throws Exception {		
 		Integer id = new Integer(req.getParameter("id"));
 		Person person = facade.getPerson(id);
+		List<WorkHour> workHours = facade.getWorkHours(id);
+		//referenssi dataa, jotta projektin nimi ja tuntityypin nimi 
+		//osattaisiin näyttää jsp:n tuntilistauksessa
+		Map hourTypes = TimetrackController.convertToMap(facade.getAllHourTypes());		
+		Map projects = TimetrackController.convertToMap(facade.getAllProjects(false));
+		
 		ModelAndView mav = new ModelAndView("static_person");
 		mav.addObject("person", person);
+		mav.addObject("workHours", workHours);
+		mav.addObject("hourTypes", hourTypes);
+		mav.addObject("projects", projects);
 		return mav;
 	}
 	
@@ -39,6 +50,14 @@ public class PersonTaskController extends MultiActionController{
 		ModelAndView mav = new ModelAndView("front_page");
 		mav.addObject("message", person.getFirstname()+" "+person.getLastname()+
 				" ("+person.getEmail()+") uusi salasana on \""+password+"\"");
+		return mav;
+	}
+	
+	public ModelAndView deleteWorkhour(HttpServletRequest req,
+			HttpServletResponse res) throws Exception {
+		Integer id = new Integer(req.getParameter("workHourId"));
+		this.facade.deleteWorkHour(id);		
+		ModelAndView mav = new ModelAndView("redirect:timetrackController");		
 		return mav;
 	}
 	

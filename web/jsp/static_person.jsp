@@ -72,6 +72,40 @@ Käyttäjän tiedot
 		<td width="33%" align="left">
 			<c:out value="${person.country}"></c:out>
 		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<c:if test="${not empty workHours}">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+			    	<td colspan="4">Työtunnit </td>
+			    </tr>
+				<tr>
+					<td bgcolor="#A1A1A1">Pvm</td>
+					<td bgcolor=#A1A1A1>Projekti</td>		
+					<td bgcolor="#A1A1A1">Tuntityyppi</td>
+					<td bgcolor=#A1A1A1>Määrä</td>	
+					
+				</tr>
+				
+				<c:forEach items="${workHours}" var="workhour" varStatus="status">
+					<c:set var="color" value="#E6ECFF" />	
+			          <c:if test="${status.count%2==0}">
+			            <c:set var="color" value="#CDCDCD" />
+			          </c:if>
+			    <tr>
+			    	<td colspan="5" height="2" bgcolor="GRAY"/>
+			    </tr>
+				<tr>
+					<td bgcolor="${color}"><fmt:formatDate value="${workhour.workDate}" pattern="dd.MM.yyyy"/></td>		
+					<td bgcolor="${color}">${projects[workhour.projectId].name}</td>				
+					<td bgcolor="${color}">${hourTypes[workhour.hourTypeId].name}</td>		
+					<td bgcolor="${color}">${workhour.amount}</td>							
+				</tr>	
+				</c:forEach>
+			</table>
+			</c:if>
+		</td>
 	</tr>	
 </table>
 </div>

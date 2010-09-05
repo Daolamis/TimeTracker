@@ -63,7 +63,12 @@ public class DatabaseFacadeImpl implements DatabaseFacade{
 	}
 	@Override
 	public List<Project> getAllProjects(boolean onlyActive) {		
-		return this.projectDAO.getAllProjects(onlyActive);
+		List<Project> projects =  this.projectDAO.getAllProjects(onlyActive);
+		for(Project project:projects){
+			List<Integer> list =  this.hourTypeDAO.getProjectHourTypes(project.getId());		
+			project.setHourtypes(new HashSet<Integer>(list));
+		}
+		return projects;
 	}
 	@Override
 	public Person getPerson(Integer id) {
